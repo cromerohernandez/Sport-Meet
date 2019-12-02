@@ -11,7 +11,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
     .then(() => console.info(`Successfully connected to the database ${MONGODB_URI}`))
     .catch(error => console.error(`An error ocurred trying to connect to de database ${MONGODB_URI}`, error));
 
-//when you received the event 'SIGINT' (first param) (SIGINT = CTRL+C),
+//when you received the event 'SIGINT' (SIGINT = CTRL+C),
 // close the connection with mongoose (function - second param)
 process.on('SIGINT', function () {
     mongoose.connection.close(function () {
