@@ -32,7 +32,7 @@ app.use(express.json())
 //A new body object containing the parsed data is populated on the request object after the middleware (i.e. req.body)
 app.use(express.urlencoded({ extended: false }));
 
-//we are going to load our publics files into the public's folder
+//we are going to load our static's files into the public's folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
