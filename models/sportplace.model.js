@@ -4,25 +4,25 @@ const Schema = mongoose.Schema
 const sportPlaceSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: [true, 'Name is required'],
   },
   direction: {
     type: String,
-    required: true
+    required: [true, 'Direction is required'],
   },
   city: {
     type: String,
-    required: true
+    required: [true, 'City is required'],
   },
   openingTime: {
     type: Number,
-    required: true,
+    required: [true, 'Opening time is required'],
     min: 0,
     max: 23
   },
   closingTime: {
     type: Number,
-    required: true,
+    required: [true, 'Opening time is required'],
     min: 0,
     max: 23
   }
