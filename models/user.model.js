@@ -55,6 +55,12 @@ const userSchema = new Schema({
       'select at least a sport'
     ]
   },
+  level: {
+    type: Number,
+    default: 0,
+    min: 1,
+    max: 5
+  },
   activationToken: {
     type: String,
     default: () => randToken.generate(64)
