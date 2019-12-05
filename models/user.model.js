@@ -16,7 +16,7 @@ require('../config/db.config')
 const userSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Name is required'],
     trim: true
   },
   surname: {
@@ -26,20 +26,15 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'Email is required'],
     trim: true,
     unique: true
   },
   password: {
     type: String,
-    required: true,
+    required: [true, 'password is required'],
     trim: true,
-    validate: [
-      function(input) {
-        return input.length >= 8;
-      },
-      "Password should be at least 8 character."
-    ]
+    minlength: [8, 'Password needs at last 8 chars']
   },
   fairPlay: {
     type: Number,
@@ -48,12 +43,8 @@ const userSchema = new Schema({
   sport: {
     type: String,
     enum: ['Padel', 'Tennis', 'Futsal', 'Basketball', 'Volleyball'],
-    required: [
-      function() {
-        return this.enum.length > 1;
-      },
-      'select at least a sport'
-    ]
+    minlength: [1, 'Select at least one sport']
+
   },
   level: {
     type: Number,
@@ -66,9 +57,10 @@ const userSchema = new Schema({
     default: () => randToken.generate(64)
   },
   validated: {
+    type: Boolean,
     default: false
-  },  
-})
+  }  
+}, { timestamps: true })
 
 userSchema.method.checkPassword = function(password) {
   const user = this
