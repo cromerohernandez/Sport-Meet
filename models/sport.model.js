@@ -9,6 +9,10 @@ const sportSchema = new Schema({
   numberOfPlayers: {
     type: Number,
     required: [true, 'Number of players is required']
+  },
+  icon: {
+    type: String,
+    required: [true, 'the URL of the icon is required']
   }
 })
 

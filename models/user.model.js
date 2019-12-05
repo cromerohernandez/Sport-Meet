@@ -36,6 +36,13 @@ const userSchema = new Schema({
     trim: true,
     minlength: [8, 'Password needs at last 8 chars']
   },
+  photo: {
+    type: String
+  },
+  fairPlay: {
+    type: Number,
+    default: 0
+  },
   userType: {
     type: String,
     required: [true, 'user\'s type is required'],
@@ -44,28 +51,19 @@ const userSchema = new Schema({
       'Player'
     ]
   },
-  fairPlay: {
-    type: Number,
-    default: 0
-  },
-  sport: {
-    type: String,
-    enum: [
-      'Padel',
-      'Tennis', 
-      'Futsal', 
-      'Basketball', 
-      'Volleyball'
-    ],
-    minlength: [1, 'Select at least one sport']
-
-  },
-  level: {
-    type: Number,
-    default: 0,
-    min: 1,
-    max: 5
-  },
+  sport: [
+    {
+      id: mongoose.Schema.Types.ObjectId,
+      ref: 'Sport',
+      required: [true, 'fill all the field'],
+      level: {
+        type: Number,
+        min: 1,
+        max: 5,
+        default: 1
+      }
+    }
+  ],
   activationToken: {
     type: String,
     default: () => randToken.generate(64)
@@ -73,7 +71,11 @@ const userSchema = new Schema({
   validated: {
     type: Boolean,
     default: false
-  }  
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 }, { timestamps: true })
 
 userSchema.method.checkPassword = function(password) {
