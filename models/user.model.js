@@ -53,7 +53,7 @@ const userSchema = new Schema({
   },
   sport: [
     {
-      id: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Sport',
       required: [true, 'fill all the field'],
       level: {
