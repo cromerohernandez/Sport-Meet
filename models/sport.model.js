@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 const sportSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: [true, 'Name is required']
   },
   numberOfPlayers: {
     type: Number,
-    required: true
+    required: [true, 'Number of players is required']
   }
 })
 
