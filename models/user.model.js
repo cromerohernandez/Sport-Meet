@@ -38,7 +38,7 @@ const userSchema = new Schema({
   },
   userType: {
     type: String,
-    required: [true, 'password is required'],
+    required: [true, 'user\'s type is required'],
     enum: [
       'Club',
       'Player'
