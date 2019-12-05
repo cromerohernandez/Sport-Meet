@@ -32,9 +32,17 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: [true, 'password is required'],
+    required: [true, 'Password is required'],
     trim: true,
     minlength: [8, 'Password needs at last 8 chars']
+  },
+  userType: {
+    type: String,
+    required: [true, 'password is required'],
+    enum: [
+      'Club',
+      'Player'
+    ]
   },
   fairPlay: {
     type: Number,
@@ -42,7 +50,13 @@ const userSchema = new Schema({
   },
   sport: {
     type: String,
-    enum: ['Padel', 'Tennis', 'Futsal', 'Basketball', 'Volleyball'],
+    enum: [
+      'Padel',
+      'Tennis', 
+      'Futsal', 
+      'Basketball', 
+      'Volleyball'
+    ],
     minlength: [1, 'Select at least one sport']
 
   },
