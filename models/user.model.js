@@ -1,11 +1,18 @@
+//in this model is only missing a functionality: to re-hash the password when the user modify it
+//I'll deploy it at the appropriate time
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // token generator
 const randToken = require('rand-token')
 
+//to hash user's password
+const bcrypt = require('bcrypt')
+
 require('../config/db.config')
 
+// create the schema
 const userSchema = new Schema({
   name: {
     type: String,
@@ -56,3 +63,14 @@ const userSchema = new Schema({
     default: false
   },  
 })
+
+userSchema.method.checkPassword = function(password) {
+  const user = this
+  return bcrypt.compare(password, user.password)
+}
+
+//create the user
+const User = mongoose.model('User', userSchema)
+
+//export the user
+module.exports = User
