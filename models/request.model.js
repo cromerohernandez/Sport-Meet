@@ -2,17 +2,17 @@ const mongoose = require ('mongoose')
 const Schema = mongoose.Schema
 
 const requestSchema = new Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'Player is required']
   },
-  sportId: {
+  sport: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sport',
     required: [true, 'Sport is required']
   },
-  sportPlaceId: {
+  sportPlace: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'SportPlace',
     required: [true, 'SportPlace is required']
