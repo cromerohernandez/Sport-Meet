@@ -28,7 +28,7 @@ const matchSchema = new Schema({
     ref: 'SportPlace',
     required: [true, 'SportPlace is required']
   },
-  sporField: {
+  sportField: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'SportField',
     required: [true, 'SportField is required']
@@ -46,7 +46,7 @@ const matchSchema = new Schema({
       }
     }
   ],
-  activated: {
+  active: {
     type: Boolean,
     default: false
   },
