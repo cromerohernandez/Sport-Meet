@@ -13,13 +13,21 @@ const path = require('path')
 //Node.js module. HTTP request logger middleware
 const logger = require('morgan')
 
+//Node.js module. HTTP request logger middleware to use req.cookies
+const cookieParser = require('cookie-parser');
+
 
 /**
- * Handlebars and Mongoose config
+ * Handlebars, session and Mongoose config
  */
 require('./config/hbs.config');
 require('./config/db.config');
+const session = require('./config/session.config');
 
+
+/**
+ * Configure express
+ */
 const app = express()
 
 //log the status code to the console (2xx, 4xx, 5xx ecc)
@@ -32,8 +40,20 @@ app.use(express.json())
 //A new body object containing the parsed data is populated on the request object after the middleware (i.e. req.body)
 app.use(express.urlencoded({ extended: false }));
 
+//Parse Cookie header and populate req.cookies with an object keyed by the cookie names
+app.use(cookieParser());
+
 //we are going to load our static's files into the public's folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(session)
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.user
+  req.currentUser = req.session.user
+  next()
+})
 
 /**
  * View engine setup

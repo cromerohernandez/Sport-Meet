@@ -9,7 +9,7 @@ const router = express.Router();
 //homepage's controller
 const baseController = require('../controllers/base.controller')
 //user's controller
-const userController = require('../controllers/user.controller')
+const usersController = require('../controllers/user.controller')
 //sportPlace's controller
 const sportPlaceController = require('../controllers/sportField.controller')
 //request's controller
@@ -25,36 +25,38 @@ const playMiddleware = require('../middlewares/play.middleware')
 router.get('/', baseController.base)
 
 //GET petition to '/users/new' => user function
-router.get('/users/new', authMiddleware.isNotAuthenticated, userController.new)
+router.get('/players/new', authMiddleware.isNotAuthenticated, usersController.new)
 //POST petition to '/users' => user function
-router.post('/users', authMiddleware.isNotAuthenticated, userController.create)
+router.post('/players', authMiddleware.isNotAuthenticated, userController.create)
 //GET petition to '/users/:token/validate' => user function
-router.get('/users/:token/validate', userController.validate)
+// router.get('/users/:token/validate', userController.validate)
 
 //GET petition to '/login' => user function
-router.get('/login', authMiddleware.isNotAuthenticated, userController.login)
+// router.get('/login', authMiddleware.isNotAuthenticated, userController.login)
 //POST petition to '/login' => user function
-router.post('/login', authMiddleware.isNotAuthenticated, userController.doLogin)
+// router.post('/login', authMiddleware.isNotAuthenticated, userController.doLogin)
 //GET petition to '/logout' => user function
-router.get('/logout', authMiddleware.isAuthenticated, userController.logout)
+// router.get('/logout', authMiddleware.isAuthenticated, userController.logout)
 
 //GET petition to '/sportfield/new' => sportPlace function
-router.get('/sportfield/new', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.new)
+// router.get('/sportfield/new', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.new)
 //POST petition to '/sportfield' => sportPlace function
-router.post('/sportfield', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.create)
+// router.post('/sportfield', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.create)
 
 //GET petition to '/request/new' => request function
-router.get('/request/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.new)
+// router.get('/request/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.new)
 //POST petition to '/request' => request function
-router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
+// router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
 
 //GET petition to '/match/:id' => match function
-router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)
+// router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)
 //POST petition to '/match/:id/comments' => match function
-router.post('/match/:id/comments', authMiddleware.isAuthenticated, playMiddleware.isActiveAndNotPlayed, matchController.addComment)
+// router.post('/match/:id/comments', authMiddleware.isAuthenticated, playMiddleware.isActiveAndNotPlayed, matchController.addComment)
+
+
 
 //GET petition to '/:id' => user function
-router.get('/:id'/*¿?*/, authMiddleware.isAuthenticated, userController.profile)
+// router.get('/:username/:id', authMiddleware.isAuthenticated, userController.profile)
 
 //we export 'router' so it can be used into app.js file
 module.exports = router;
