@@ -9,7 +9,7 @@ const router = express.Router();
 //homepage's controller
 const baseController = require('../controllers/base.controller')
 //user's controller
-const usersController = require('../controllers/user.controller')
+const usersController = require('../controllers/users.controller')
 //sportPlace's controller
 const sportPlaceController = require('../controllers/sportField.controller')
 //request's controller
@@ -27,7 +27,7 @@ router.get('/', baseController.base)
 //GET petition to '/users/new' => user function
 router.get('/players/new', authMiddleware.isNotAuthenticated, usersController.new)
 //POST petition to '/users' => user function
-router.post('/players', authMiddleware.isNotAuthenticated, userController.create)
+router.post('/players', authMiddleware.isNotAuthenticated, usersController.create)
 //GET petition to '/users/:token/validate' => user function
 // router.get('/users/:token/validate', userController.validate)
 

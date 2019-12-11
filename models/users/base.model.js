@@ -12,8 +12,7 @@ const options = {
   collection: 'users'
 }
 
-//Base model: these are the common fileds between Player.model and Club.model
-const Base = mongoose.model('Base', new Schema({
+const baseSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Name is required'],
@@ -39,10 +38,13 @@ const Base = mongoose.model('Base', new Schema({
     type: Boolean,
     default: false
   },
-}, options))
+}, options)
+
+//Base model: these are the common fileds between Player.model and Club.model
+const Base = mongoose.model('Base', baseSchema)
 
 //middleware: if the password has been modified, then hash it again
-Base.pre('save', function (next) {
+baseSchema.pre('save', function (next) {
   const user = this
 
   if (user.isModified('password')) {
@@ -61,7 +63,7 @@ Base.pre('save', function (next) {
 })
 
 //check if the hashed passwords are equals
-Base.methods.checkPassword = function (password) {
+baseSchema.methods.checkPassword = function (password) {
   return bcrypt.compare(password, this.password)
 }
 
