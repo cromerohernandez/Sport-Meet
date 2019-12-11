@@ -14,13 +14,18 @@ const Sport = require('../models/sport.model')
 const mongoose = require('mongoose');
 
 module.exports.new = (_, res) => {
+  console.log('hola')
+
   Sport.find()
     //it returns an array of sports
-    .then(sport => {
-      //put all the sports in "sports" array
-      const sports = sport.map()
+    .then(sports => {
+      const data = {
+        sports,
+        user: new Player()
+      }
+      res.render('users/new', data)
     })
-  res.render('players/new', { user: new User() })
+    .catch(error)
 }
 
 module.exports.create = (res, req, next) => {
