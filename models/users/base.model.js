@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10
-
+const uniqueValidator = require('mongoose-unique-validator')
 
 require('../../config/db.config')
 
@@ -28,7 +28,7 @@ const baseSchema = new Schema({
     type: String,
     required: [true, 'Password is required'],
     trim: true,
-    minlength: [8, 'Password needs at last 8 chars']
+    minlength: [8, 'Password needs at least 8 chars']
   },
   photo: {
     type: String,
@@ -39,6 +39,8 @@ const baseSchema = new Schema({
     default: false
   },
 }, options)
+
+baseSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' })
 
 //Base model: these are the common fileds between Player.model and Club.model
 const Base = mongoose.model('Base', baseSchema)
