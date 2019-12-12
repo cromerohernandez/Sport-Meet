@@ -8,8 +8,10 @@ const router = express.Router();
 
 //homepage's controller
 const baseController = require('../controllers/base.controller')
-//user's controller
-const usersController = require('../controllers/users.controller')
+//player's controller
+const playersController = require('../controllers/players.controller')
+//club's controller
+const clubsController = require('../controllers/clubs.controller')
 //sportPlace's controller
 const sportPlaceController = require('../controllers/sportField.controller')
 //request's controller
@@ -25,18 +27,20 @@ const playMiddleware = require('../middlewares/play.middleware')
 router.get('/', baseController.base)
 
 //GET petition to '/users/new' => user function
-router.get('/players/new', authMiddleware.isNotAuthenticated, usersController.new)
+router.get('/players/new', authMiddleware.isNotAuthenticated, playersController.new)
 //POST petition to '/users' => user function
-router.post('/players', authMiddleware.isNotAuthenticated, usersController.create)
+router.post('/players', authMiddleware.isNotAuthenticated, playersController.create)
 //GET petition to '/users/:token/validate' => user function
-// router.get('/users/:token/validate', userController.validate)
-
+router.get('/players/:token/validate', playersController.validate)
 //GET petition to '/login' => user function
-// router.get('/login', authMiddleware.isNotAuthenticated, userController.login)
+router.get('/login', authMiddleware.isNotAuthenticated, playersController.login)
 //POST petition to '/login' => user function
-// router.post('/login', authMiddleware.isNotAuthenticated, userController.doLogin)
+router.post('/login', authMiddleware.isNotAuthenticated, playersController.doLogin)
 //GET petition to '/logout' => user function
-// router.get('/logout', authMiddleware.isAuthenticated, userController.logout)
+// router.get('/logout', authMiddleware.isAuthenticated, usersController.logout)
+
+//GET petition to '/users/new' => user function
+router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
 
 //GET petition to '/sportfield/new' => sportPlace function
 // router.get('/sportfield/new', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.new)

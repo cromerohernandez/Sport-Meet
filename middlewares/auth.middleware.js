@@ -16,7 +16,7 @@ module.exports.isAuthenticated = (req, res, next) => {
 
 module.exports.isNotAuthenticated = (req, res, next) => {
   if (req.session.user) {
-    res.redirect('/:username/:id');
+    res.redirect('/');
   } else {
     next()
   }
