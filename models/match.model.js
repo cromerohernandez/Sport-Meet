@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const message = require('message.model')
+
 const matchSchema = new Schema({
   reference: {
     type: Number,
@@ -11,27 +13,23 @@ const matchSchema = new Schema({
     ref: 'Sport',
     required: [true, 'Sport is required']
   },
-  date: {
-    type: Date,
-    required: [true, 'Date is required']
-  },
   startTime: {
-    type: Number,
+    type: Date,
     required: [true, 'StartTime is required']
   },
   endTime: {
-    type: Number,
+    type: Date,
     required: [true, 'EndTime is required']
   },
-  sportPlace: {
+  club: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'SportPlace',
-    required: [true, 'SportPlace is required']
+    ref: 'Club',
+    required: [true, 'Club is required']
   },
-  sportField: {
+  court: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'SportField',
-    required: [true, 'SportField is required']
+    ref: 'Court',
+    required: [true, 'Court is required']
   },
   confirmed: [
     {
@@ -55,17 +53,7 @@ const matchSchema = new Schema({
     default: false
   },
   messages: [
-    { 
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: [true, 'User is required']
-      },
-      text: {
-        type: String,
-        required: [true, 'Text is required']
-      }
-    }, { timestamps: true }
+    /*¿?*/
   ],
 }, { timestamps: true })
 

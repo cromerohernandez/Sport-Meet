@@ -1,0 +1,278 @@
+[ 
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Multi-2",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Multi-3",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Multi-4",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "PaddleTennis-1",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "PaddleTennis-2",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "PaddleTennis-3",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "PaddleTennis-4",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "PaddleTennis-5",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },     
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-1",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-2",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-3",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-4",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-5",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-6",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-7",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Polideportivo Municipal José Caballero",
+    "name": "Tennis-8",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Multi-2",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Multi-3",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Multi-4",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Multi-5",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Multi-6",
+    "sports": ["basketball", "futsal"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-1",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-2",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-3",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-4",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-5",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-6",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-7",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "PaddleTennis-8",
+    "sports": ["paddleTennisSingles", "paddleTennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Tennis-1",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Tennis-2",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Tennis-3",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Ciudad Deportiva Valdelasfuentes",
+    "name": "Tennis-4",
+    "sports": ["tennisSingles", "tennisDoubles"],
+    "indoorOrOutdoor": "outdoor"
+  },
+  {
+    "club": "Pabellón Deportivo Bachiller Alonso López",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Deportivo Miraflores",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Deportivo Municipal Amaya Valdemoro",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Deportivo Municipal Antela Parada",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Deportivo Municipal de los Sueños",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Deportivo Pedro Ferrándiz",
+    "name": "Multi-1",
+    "sports": ["basketball", "futsal", "handball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Distrito Centro",
+    "name": "Basket-1",
+    "sports": ["basketball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Distrito Centro",
+    "name": "Basket-2",
+    "sports": ["basketball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Distrito Centro",
+    "name": "Basket-3",
+    "sports": ["basketball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Distrito Centro",
+    "name": "Basket-4",
+    "sports": ["basketball"],
+    "indoorOrOutdoor": "indoor"
+  },
+  {
+    "club": "Pabellón Luis Buñuel",
+    "name": "Multi-1",
+    "sports": ["basketball", "volleyball"],
+    "indoorOrOutdoor": "indoor"
+  }
+]

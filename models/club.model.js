@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const sportPlaceSchema = new Schema({
+const clubSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Name is required'],
@@ -28,8 +28,8 @@ const sportPlaceSchema = new Schema({
   }
 })
 
-//create the sportPlace model
-const SportPlace = mongoose.model('SportPlace', sportPlaceSchema)
+//create the club model
+const Club = mongoose.model('Club', clubSchema)
 
-//Export spportPlace model
-module.exports = SportPlace
+//Export club model
+module.exports = Club

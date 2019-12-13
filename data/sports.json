@@ -1,0 +1,47 @@
+[ 
+  {
+    "name": "basketball",
+    "numberOfPlayers": 10,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "football",
+    "numberOfPlayers": 22,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "futsal",
+    "numberOfPlayers": 10,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "handball",
+    "numberOfPlayers": 14,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "paddleTennisSingles",
+    "numberOfPlayers": 2,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "paddleTennisDoubles",
+    "numberOfPlayers": 4,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "tennisSingles",
+    "numberOfPlayers": 2,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "tennisDoubles",
+    "numberOfPlayers": 4,
+    "icon": "../public/images/sportIconDefault.jpg"
+  },
+  {
+    "name": "volleyball",
+    "numberOfPlayers": 12,
+    "icon": "../public/images/sportIconDefault.jpg"
+  }
+]
