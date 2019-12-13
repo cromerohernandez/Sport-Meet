@@ -6,7 +6,12 @@ const Base = require('./base.model')
 
 const Club = Base.discriminator(
   'Club', 
-  new Schema({})
+  new Schema({
+    address: {
+      type: String,
+      required: true
+    }
+  })
 )
 
 module.exports = Club

@@ -23,8 +23,13 @@ const authMiddleware = require('../middlewares/auth.middleware')
 //playMiddleware
 const playMiddleware = require('../middlewares/play.middleware')
 
-//GET petition to '/' => base function
-router.get('/', baseController.base)
+router.get('/', authMiddleware.isAuthenticated, baseController.index)
+//GET petition to 'login' => base function
+router.get('/login', authMiddleware.isNotAuthenticated, baseController.login)
+//POST do login
+router.post('/login', authMiddleware.isNotAuthenticated, baseController.doLogin)
+//POST petition to '/logout' => user function
+router.post('/logout', authMiddleware.isAuthenticated, baseController.logout)
 
 //GET petition to '/users/new' => user function
 router.get('/players/new', authMiddleware.isNotAuthenticated, playersController.new)
@@ -33,14 +38,16 @@ router.post('/players', authMiddleware.isNotAuthenticated, playersController.cre
 //GET petition to '/users/:token/validate' => user function
 router.get('/players/:token/validate', playersController.validate)
 //GET petition to '/login' => user function
-router.get('/login', authMiddleware.isNotAuthenticated, playersController.login)
-//POST petition to '/login' => user function
-router.post('/login', authMiddleware.isNotAuthenticated, playersController.doLogin)
-//GET petition to '/logout' => user function
-// router.get('/logout', authMiddleware.isAuthenticated, usersController.logout)
+// router.get('/login', authMiddleware.isNotAuthenticated, playersController.login)
+// //POST petition to '/login' => user function
+// router.post('/login', authMiddleware.isNotAuthenticated, playersController.doLogin)
+
 
 //GET petition to '/users/new' => user function
 router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
+
+router.post('/clubs', authMiddleware.isNotAuthenticated, clubsController.create)
+
 
 //GET petition to '/sportfield/new' => sportPlace function
 // router.get('/sportfield/new', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.new)
