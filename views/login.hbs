@@ -1,35 +1,27 @@
-<form class="form-signin" action="/login" method="POST">
-
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-  </div>
-
-  <div class="form-group">
-    <label for="email">Email address</label>
-    <input name="email" type="email" class="form-control {{#if error.email }}is-invalid{{/if}}" id="email" placeholder="Enter email"
-      value="{{ user.email }}">
-    {{#if error.email}}
-    <div class="invalid-feedback">
-      {{error.email}}
+<div class="container">
+  <div class="row text-center login-page">
+	   <div class="col-md-12 login-form">
+	      <form action="/login" method="POST">
+          {{>titleForm}}		
+	        {{>emailForm}}  
+          {{>passwordForm}}
+		      <div class="row">
+		        <div class="col-md-12 login-from-row">
+		          <button class="btn btn-info">Sing in</button>
+		        </div>
+		      </div>
+          <div class="row">
+		        <div class="col-md-12 login-from-row">
+              <p>Don't have an account?</p>
+              <p>
+                Sing up as a
+                <a href="/players/new"><b>Player</b></a>
+                or as a
+                <a href="/clubs/new"><b>Club</b></a>
+              </p>
+		        </div>
+		      </div>
+	      </form>
+	    </div>
     </div>
-    {{/if}}
-  </div>
-
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input name="password" type="password" class="form-control {{#if error.password }}is-invalid{{/if}}" id="password" placeholder="Password"
-      value="{{ user.password }}">
-    {{#if error.password}}
-      <div class="invalid-feedback">
-        {{error.password}}
-      </div>
-    {{/if}}
-  </div>
-
-  <button type="submit" class="btn btn-primary">Sing in</button>
-
-</form>
-<br>
-<p>Don't have an account?</p>
-<a href="/players/new">Sing up as a player</b></a><br>
-<a href="/clubs/new">Sing up as a club</a>
+</div>

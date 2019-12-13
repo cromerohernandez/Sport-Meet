@@ -1,52 +1,30 @@
-<div class="text-center mb-4">
-{{#if user.isNew}}
-  <h3 class="h3 mb-3 font-weight-normal">New club</h3>
-  <form action="/clubs" method="POST">
-{{else}}
-  <h3 class="h3 mb-3 font-weight-normal">Edit your club</h3>
-  <form action="/clubs/{{user.id}}/edit" method="POST">
-{{/if}}
+<div class="container">
+  <div class="row text-center login-page">
+	   <div class="col-md-12 login-form">
+	      <form action="/clubs" method="POST">
+
+	        <div class="row">
+		        <div class="col-md-12 login-form-header">
+		          <p class="login-form-font-header">New<span>Club</span><p>
+		        </div>
+		      </div>
+
+          {{>nameForm}}
+          {{>addressForm}}
+          {{>emailForm}}
+          {{>passwordForm}}
+
+          <div class="row">
+            <div class="col-md-12 login-from-row">
+              <input type="text" class="form-control" id="photo" name="photo" placeholder="photo">
+            </div>
+          </div>
+
+          <div class="col-md-12 login-from-row">
+            <button class="btn btn-info">Sing in</button>
+          </div>
+
+	      </form>
+	    </div>
+    </div>
 </div>
-
-  <div class="form-group">
-    <input type="text" class="form-control {{#if error.name }}is-invalid{{/if}}" id="name" name="name" placeholder="Name" value="{{ user.name }}">
-  {{#if error.name}}
-    <div class="invalid-feedback">
-      {{error.name.message}}
-    </div>
-  {{/if}}
-  </div>
-
-  <div class="form-group">
-    <input type="text" class="form-control {{#if error.address }}is-invalid{{/if}}" id="address" name="address" placeholder="Address" value="{{ user.address }}">
-  {{#if error.address}}
-    <div class="invalid-feedback">
-      {{error.address.message}}
-    </div>
-  {{/if}}
-  </div>
-
-  <div class="form-group">
-    <input type="email" class="form-control {{#if error.email }}is-invalid{{/if}}" id="email" name="email" placeholder="Email" value="{{ user.email }}">
-  {{#if error.email}}
-    <div class="invalid-feedback">
-      {{error.email.message}}
-    </div>
-    {{/if}}
-  </div>
-
-  <div class="form-group">
-    <input type="password" class="form-control {{#if error.password }}is-invalid{{/if}}" id="password" name="password" placeholder="Password">
-  {{#if error.password}}
-    <div class="invalid-feedback">
-      {{error.password.message}}
-    </div>
-    {{/if}}
-  </div>
-
-  <div class="form-group">
-    <input type="text" class="form-control" id="photo" name="photo" placeholder="photo">
-  </div>
-
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>

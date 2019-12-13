@@ -5,7 +5,11 @@ const mongoose = require('mongoose');
 
 // render the home page
 module.exports.login = (_, res) => {
-  res.render('login')
+  const title = {
+    firstWord: 'Sport',
+    secondWord: 'Meet'
+  }
+  res.render('login', title)
 }
 
 module.exports.doLogin = (req, res, next) => {
