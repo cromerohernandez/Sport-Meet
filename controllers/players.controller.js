@@ -26,7 +26,7 @@ module.exports.new = (_, res) => {
       res.render('players/form', data)
     })
     .catch(error => next(error))
-  }
+}
 
 module.exports.create = (req, res, next) => {
   const user = new Player({

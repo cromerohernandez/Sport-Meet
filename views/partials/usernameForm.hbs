@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-12 login-from-row">
+    <input type="text" class="form-control {{#if error.username }}is-invalid{{/if}}" id="username" name="username" placeholder="Username" value="{{ user.username }}">
+    {{#if error.username}}
+      <div class="invalid-feedback">
+        {{error.username.message}}
+      </div>
+    {{/if}}
+  </div>
+</div>
