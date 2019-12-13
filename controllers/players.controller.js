@@ -23,7 +23,7 @@ module.exports.new = (_, res) => {
         sports,
         user: new Player()
       }
-      res.render('users/form', data)
+      res.render('players/form', data)
     })
     .catch(error => next(error))
   }
@@ -46,7 +46,7 @@ module.exports.create = (req, res, next) => {
     .catch(error => {
       if (error instanceof mongoose.Error.ValidationError) {
         // console.log(error.errors)
-        res.render('users/form', { 
+        res.render('players/form', { 
           user, 
           error: error.errors 
         })
@@ -74,21 +74,21 @@ module.exports.validate = (req, res, next) => {
 }
 
 module.exports.login = (_, res) => {
-  res.render('users/login')
+  res.render('players/login')
 }
 
 module.exports.doLogin = (req, res, next) => {
   const { email, password } = req.body
 
   if (!email || !password) {
-    return res.render('users/login', { user: req.body })
+    return res.render('players/login', { user: req.body })
   }
 
   Player.findOne({ email: email, validated: true })
 
     .then(user => {
       if (!user) {
-        res.render('users/login', {
+        res.render('players/login', {
           user: req.body,
           error: { password: 'invalid password' }
         })
@@ -96,7 +96,7 @@ module.exports.doLogin = (req, res, next) => {
         return user.checkPassword(password)
           .then(match => {
             if (!match) {
-              res.render('users/login', {
+              res.render('players/login', {
                 user: req.body,
                 error: { password: 'invalid password' }
               })
@@ -110,7 +110,7 @@ module.exports.doLogin = (req, res, next) => {
     })
     .catch(error => {
       if (error instanceof mongoose.Error.ValidationError) {
-        res.render('users/login', {
+        res.render('players/login', {
           user: req.body,
           error: error.errors
         })

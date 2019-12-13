@@ -1,11 +1,12 @@
+<div class="text-center mb-4">
 {{#if user.isNew}}
-  <h3>New profile</h3>
-<form action="/players" method="POST">
-{{else if }}
+  <h3 class="h3 mb-3 font-weight-normal">New club</h3>
+  <form action="/clubs" method="POST">
 {{else}}
-  <h3>Edit profile</h3>
-  <form action="/players/{{user.id}}/edit" method="POST">
+  <h3 class="h3 mb-3 font-weight-normal">Edit your club</h3>
+  <form action="/clubs/{{user.id}}/edit" method="POST">
 {{/if}}
+</div>
 
   <div class="form-group">
     <input type="text" class="form-control {{#if error.name }}is-invalid{{/if}}" id="name" name="name" placeholder="Name" value="{{ user.name }}">
@@ -13,25 +14,16 @@
     <div class="invalid-feedback">
       {{error.name.message}}
     </div>
-    {{/if}}
+  {{/if}}
   </div>
 
   <div class="form-group">
-    <input type="text" class="form-control {{#if error.surname }}is-invalid{{/if}}" id="surname" name="surname" placeholder="Surname" value="{{ user.surname }}">
-  {{#if error.surname}}
+    <input type="text" class="form-control {{#if error.address }}is-invalid{{/if}}" id="address" name="address" placeholder="Address" value="{{ user.address }}">
+  {{#if error.address}}
     <div class="invalid-feedback">
-      {{error.surname.message}}
+      {{error.address.message}}
     </div>
-    {{/if}}
-  </div>
-
-  <div class="form-group">
-    <input type="text" class="form-control {{#if error.username }}is-invalid{{/if}}" id="username" name="username" placeholder="Username" value="{{ user.username }}">
-  {{#if error.username}}
-    <div class="invalid-feedback">
-      {{error.username.message}}
-    </div>
-    {{/if}}
+  {{/if}}
   </div>
 
   <div class="form-group">
