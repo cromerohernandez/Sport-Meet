@@ -5,11 +5,6 @@
     "icon": "../public/images/sportIconDefault.jpg"
   },
   {
-    "name": "football",
-    "numberOfPlayers": 22,
-    "icon": "../public/images/sportIconDefault.jpg"
-  },
-  {
     "name": "futsal",
     "numberOfPlayers": 10,
     "icon": "../public/images/sportIconDefault.jpg"

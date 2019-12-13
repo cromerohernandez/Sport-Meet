@@ -12,7 +12,7 @@ const baseController = require('../controllers/base.controller')
 const playersController = require('../controllers/players.controller')
 //club's controller
 const clubsController = require('../controllers/clubs.controller')
-//c's controller
+//court's controller
 const courtsController = require('../controllers/courts.controller')
 //request's controller
 const requestController = require('../controllers/request.controller')
