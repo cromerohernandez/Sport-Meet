@@ -16,22 +16,22 @@ const requestSchema = new Schema({
     ref: 'Sport',
     required: [true, 'Sport is required']
   },
-  sportPlace: {
+  club: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'SportPlace',
-    required: [true, 'SportPlace is required']
-  },
-  date: {
-    type: Date,
-    required: [true, 'Date is required']
+    ref: 'Club',
+    required: [true, 'Club is required']
   },
   startTime: {
-    type: Number,
+    type: Date,
     required: [true, 'StartTime is required']
   },
   endTime: {
-    type: Number,
+    type: Date,
     required: [true, 'EndTime is required']
+  },
+  active: {
+    type: Boolean,
+    default: true
   }
 }, { timestamps: true })
 

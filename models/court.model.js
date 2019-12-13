@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const sportFieldSchema = new Schema({
+const courtSchema = new Schema({
   name: {
     type: String,
     required: [True, 'Name is required']
   },
-  sportPlace: {
+  club: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'SportPlace',
-    required: [True, 'Sportplace is required']
+    ref: 'Club',
+    required: [True, 'Club is required']
   },
   sport: {
     type: mongoose.Schema.Types.ObjectId,
@@ -25,8 +25,8 @@ const sportFieldSchema = new Schema({
   },
 })
 
-//create the sportfield model
-const SportField = mongoose.model('SportField', sportFieldSchema)
+//create the court model
+const Court = mongoose.model('Court', courtSchema)
 
-//export the sportfield model
-module.exports = SportField
+//export the court model
+module.exports = Court
