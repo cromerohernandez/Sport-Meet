@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const message = require('message.model')
+const message = require('../models/message.model')
 
 const matchSchema = new Schema({
   reference: {
@@ -35,7 +35,7 @@ const matchSchema = new Schema({
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Base',
         required: [true, 'User is required']
       },
       confirmedUser: {

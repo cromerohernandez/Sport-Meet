@@ -9,7 +9,23 @@ const Club = Base.discriminator(
   new Schema({
     address: {
       type: String,
-      required: true
+      required: [true, 'Address is required'],
+    },
+    city: {
+      type: String,
+      required: [true, 'City is required'],
+    },
+    openingTime: {
+      type: Number,
+      required: [true, 'Opening time is required'],
+      min: 0,
+      max: 23
+    },
+    closingTime: {
+      type: Number,
+      required: [true, 'Opening time is required'],
+      min: 0,
+      max: 23
     }
   })
 )
