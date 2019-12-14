@@ -25,9 +25,37 @@ function randomValidUserName(username) {
 }
 
 //Function to select a random number of random sports (use to create Players)
-function randomSports(arr) {
-  const n = Math.floor(Math.random() * sportsData.length)
-  return ([...arr].sort(() => Math.random() - 0.5)).slice(0, n)
+function randomSports(arrSports) {
+  const n = Math.floor(Math.random() * arrSports.length)
+  return ([...arrSports].sort(() => Math.random() - 0.5)).slice(0, n)
+}
+
+//Function to select a random player
+function randomPlayer(arrPlayers) {
+  const n = Math.floor(Math.random() * arrPlayers.length)
+  return arrPlayers[n]
+}
+
+//Function to select a random court for a player
+function randomCourt(arrCourts, player) {
+  const selectedSport = player.sports[Math.floor(Math.random() * player.sports.length)]
+  let n = Math.floor(Math.random() * arrCourts.length)
+  
+  while (arrCourts[n].sports !== selectedSport) {
+    n = Math.floor(Math.random() * arrCourts.length)
+  }
+
+  for (let i = 0; i < arrCourts[n].sports.length; i++) {
+    
+    if (arrCourts[n].sports[i] === selectedSport) {
+      return arrCourts[n]
+    }
+
+  }
+
+
+  return arrCourts[n]
+
 }
 
 //Arrays that receive created data to use to create the next data
@@ -36,6 +64,8 @@ let sportsIds = []
 let DDBBPlayers = []
 let DDBBClubs = []
 let DDBBCourts = []
+let DDBBRequests = []
+let DDBBMatches = []
 
 //Function to create Players
 function createPlayers(sports) {
@@ -103,11 +133,31 @@ function createCourts(clubs, sports) {
     return Promise.all(createdCourts)
 }
 
-//Function to create Request
-//function createClubs() {}
+//Function to create Requests
+function createRequests(courts, players) {
+  //To create past requests
+  for(let i = 0; i < 10; i++) {
+    const selectedPlayer = randomPlayer(DDBBPlayers)
+    const selectedCourt = randomCourt(DDBBCourts, selectedPlayer)
+    const newPastRequest = new Request({
+      player: selectedPlayer_id,
+      sport: selectedCourt.sport,
+      club: selectedCourt.club,
+      court: selectedCourt._id,
+      startTime: ,//date
+      endTime: ,//date
+      active: false
+    })
+    newPastRequest.save()
+  }
 
-//Function to create Match
-//function createClubs() {}
+}
+
+//Function to create Matches
+//function createMatches() {}
+
+//Function to create Messages
+//function createMessages() {}
 
 //To delete old data and create new data
 Promise.all([
@@ -139,8 +189,14 @@ Promise.all([
     return createCourts(DDBBClubs, DDBBSports)
   })
   .then(createdCourts => {
-      DDBBCourts = createdCourts
-      console.log(`${DDBBCourts.length} courts created`)
-
+    DDBBCourts = createdCourts
+    console.log(`${DDBBCourts.length} courts created`)
+    createRequests()
+    console.log(`${DDBBRequests.length} requests created`)
   })
-  .catch(console.error)
+  /*.catch(error => console.log(error))
+    .then(() => {
+      createMatches()
+      console.log(`${DDBBMatches.length} requests created`)
+    })
+    .catch(error => console.log(error))*/

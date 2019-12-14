@@ -4,10 +4,6 @@ const Schema = mongoose.Schema
 const message = require('../models/message.model')
 
 const matchSchema = new Schema({
-  reference: {
-    type: Number,
-    required: [true, 'Reference is required']
-  },
   sport: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sport',
