@@ -1,0 +1,92 @@
+[ 
+  {
+    "name": "Polideportivo Municipal José Caballero",
+    "email": "pmjc@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265113/Clubs_Alcobendas/alcobendasJoseCaballero_bzdebr.jpg",
+    "address": "Avenida de la Transición Española, 7 ",
+    "city": "Alcobendas",
+    "openingTime": 8,
+    "closingTime": 23
+  },
+  {
+    "name": "Ciudad Deportiva Valdelasfuentes",
+    "email": "sportmeet.ironhack@gmail.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265154/Clubs_Alcobendas/alcobendasValdelasfuentes_sr4p0n.jpg",
+    "address": "Avenida Miguel de Cervantes s/n",
+    "city": "Alcobendas",
+    "openingTime": 9,
+    "closingTime": 23
+  },
+  {
+    "name": "Pabellón Deportivo Bachiller Alonso López",
+    "email": "pdbal@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265094/Clubs_Alcobendas/alcobendasBachillerAlonsoLopez_oecddd.jpg",
+    "address": "Calle Francisco Largo Caballero, 9 ",
+    "city": "Alcobendas",
+    "openingTime": 9,
+    "closingTime": 23
+  },
+  {
+    "name": "Pabellón Deportivo Miraflores",
+    "email": "pdm@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265129/Clubs_Alcobendas/alcobendasMiraflores_bz4cpw.jpg",
+    "address": "Calle de Miraflores, 18",
+    "city": "Alcobendas",
+    "openingTime": 10,
+    "closingTime": 22
+  },
+  {
+    "name": "Pabellón Deportivo Municipal Amaya Valdemoro",
+    "email": "pdmav@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265078/Clubs_Alcobendas/alcobendasAmayaValdemoro_y695qz.jpg",
+    "address": "Avenida Barajas s/n",
+    "city": "Alcobendas",
+    "openingTime": 9,
+    "closingTime": 22
+  },
+  {
+    "name": "Pabellón Deportivo Municipal Antela Parada",
+    "email": "pdmap@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265086/Clubs_Alcobendas/alcobendasAntelaParada_obbreg.jpg",
+    "address": "Calle Francisco Chico Mendes, 8",
+    "city": "Alcobendas",
+    "openingTime": 8,
+    "closingTime": 23
+  },
+  {
+    "name": "Pabellón Deportivo Municipal de los Sueños",
+    "email": "pdms@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265148/Clubs_Alcobendas/alcobendasSue%C3%B1os_rht6zc.jpg",
+    "address": "Avenida Doctor Severo Ochoa, 1",
+    "city": "Alcobendas",
+    "openingTime": 8,
+    "closingTime": 23
+  },
+  {
+    "name": "Pabellón Deportivo Pedro Ferrándiz",
+    "email": "pdpf@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265141/Clubs_Alcobendas/alcobendasPedroFerrandiz_jraili.jpg",
+    "address": "Avenida Olímpica, 20",
+    "city": "Alcobendas",
+    "openingTime": 9,
+    "closingTime": 23
+  },
+  {
+    "name": "Pabellón Distrito Centro",
+    "email": "pdc@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265105/Clubs_Alcobendas/alcobendasDistritoCentro_z0ghmz.jpg",
+    "address": "Avenida Olímpica, 22",
+    "city": "Alcobendas",
+    "openingTime": 9,
+    "closingTime": 23
+  },
+  {
+    "name": "Pabellón Luis Buñuel",
+    "email": "plb@sportmeet.com",
+    "photo": "https://res.cloudinary.com/sportmeetcj/image/upload/v1576265121/Clubs_Alcobendas/alcobendasLuisBu%C3%B1uel_zai1jf.jpg",
+    "address": "Calle Jaén, 77",
+    "city": "Alcobendas",
+    "openingTime": 9,
+    "closingTime": 23
+  }
+]

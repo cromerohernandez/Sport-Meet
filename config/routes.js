@@ -12,8 +12,8 @@ const baseController = require('../controllers/base.controller')
 const playersController = require('../controllers/players.controller')
 //club's controller
 const clubsController = require('../controllers/clubs.controller')
-//sportPlace's controller
-const sportPlaceController = require('../controllers/sportField.controller')
+//court's controller
+const courtsController = require('../controllers/courts.controller')
 //request's controller
 const requestController = require('../controllers/request.controller')
 //match's controller
@@ -45,14 +45,14 @@ router.get('/players/:token/validate', playersController.validate)
 
 //GET petition to '/users/new' => user function
 router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
-
+//POST petition to '/users/new' => user function
 router.post('/clubs', authMiddleware.isNotAuthenticated, clubsController.create)
 
 
-//GET petition to '/sportfield/new' => sportPlace function
-// router.get('/sportfield/new', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.new)
-//POST petition to '/sportfield' => sportPlace function
-// router.post('/sportfield', authMiddleware.isAuthenticated, authMiddleware.isClub, sportFieldController.create)
+//GET petition to '/courts/new' => court function
+// router.get('/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
+//POST petition to '/courts' => court function
+// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.create)
 
 //GET petition to '/request/new' => request function
 // router.get('/request/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.new)
