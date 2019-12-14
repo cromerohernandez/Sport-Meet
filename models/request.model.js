@@ -8,7 +8,7 @@ const requestSchema = new Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Player',
     required: [true, 'Player is required']
   },
   sport: {

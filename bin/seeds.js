@@ -93,7 +93,7 @@ function createCourts(clubs, sports) {
     const newCourt = new Court({
       club: clubs.find(club => club.name === court.club)._id,
       name: court.name,
-      //sports: court.sports.map(sportStr => sports.find(sport => sport.name === sportStr)._id),
+      sports: court.sports.map(sportStr => sports.find(sport => sport.name === sportStr)._id),
       indoorOrOutdoor: court.indoorOrOutdoor
     })
 

@@ -4,8 +4,8 @@ const Schema = mongoose.Schema
 const messageSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'User is required']
+    ref: 'Player',
+    required: [true, 'Player is required']
   },
   match: {
     type: mongoose.Schema.Types.ObjectId,

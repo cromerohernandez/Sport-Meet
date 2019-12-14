@@ -35,7 +35,7 @@ const matchSchema = new Schema({
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Base',
         required: [true, 'User is required']
       },
       confirmedUser: {

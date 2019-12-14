@@ -4,18 +4,18 @@ const Schema = mongoose.Schema
 const courtSchema = new Schema({
   club: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Club',
     required: [true, 'Club is required']
   },
   name: {
     type: String,
     required: [true, 'Name is required']
   },
-  /*sports: {
-    type: mongoose.Schema.Types.ObjectId,
+  sports: {
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'Sport',
     required: [true, 'Sport is required']    
-  },*/
+  },
   indoorOrOutdoor: {
     type: String,
     enum: [
