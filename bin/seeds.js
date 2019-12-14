@@ -1,111 +1,146 @@
 require('../config/db.config')
 
+//to generate meaningful random data
 const faker = require('faker')
 
 //models
 const Sport = require('../models/sport.model')
 const Player = require('../models/users/player.model')
 const Club = require('../models/users/club.model')
-/*const Request = require('../models/request.model')*/
-/*const Match = require('../models/match.model')*/
+const Court = require('../models/court.model')
+const Request = require('../models/request.model')
+const Match = require('../models/match.model')
 
 //data
-const sports = require('../data/sports.json')
-const clubs = require('../data/mocked/clubsAlcobendas.json')
-const courts = require('../data/mocked/courtsAlcobendas.json')
+const sportsData = require('../data/sports.json')
+const clubsData = require('../data/mocked/clubsAlcobendas.json')
+const courtsData = require('../data/mocked/courtsAlcobendas.json')
 
+//Function to create a random userName with at least 6 characters
+function randomValidUserName(username) {
+  while (username.length < 6) {
+    username = faker.internet.userName()
+  }
+  return username
+}
 
+//Function to select a random number of random sports (use to create Players)
 function randomSports(arr) {
-  let n = Math.floor(Math.random() * sports.length)
+  const n = Math.floor(Math.random() * sportsData.length)
   return ([...arr].sort(() => Math.random() - 0.5)).slice(0, n)
 }
 
-let DDBBPlayers = []
-let DDBBClubs = []
+//Arrays that receive created data to use to create the next data
 let DDBBSports = []
 let sportsIds = []
+let DDBBPlayers = []
+let DDBBClubs = []
+let DDBBCourts = []
 
+//Function to create Players
+function createPlayers(sports) {
+  const createdPlayers = []
 
+  for (let i = 0; i < 40; i++) {
+    const newplayer = new Player({
+      name: faker.name.firstName(),
+      surname: faker.name.lastName(),
+      username: randomValidUserName(faker.internet.userName()),
+      email: faker.internet.email(),
+      password: 'sportmeet',
+      photo: faker.image.people(),
+      fairPlay: 0,
+      userType: 'Player',
+      sport: randomSports(sports),
+      validated: true,
+      isAdmin: false
+    })
 
+    createdPlayers.push(newplayer.save())
+  }
+  
+  return Promise.all(createdPlayers)
+}
+
+//Function to create Clubs
 function createClubs() {
-  const clubsPromises = []
+  const createdClubs = []
 
   clubsData.forEach(club => {
     const newClub = new Club({
       name: club.name,
       email: club.email,
+      password: 'sportmeet',
       photo: club.photo,
+      validated: true,
       address: club.address,
-      city: club.city
+      city: club.city,
+      openingTime: club.openingTime,
+      closingTime: club.closingTime
     })
 
-    clubsPromises.push(newClub.save())
+    createdClubs.push(newClub.save())
   })
 
-  return Promise.all(clubsPromises)
+  return Promise.all(createdClubs)
 }
 
+//Function to create Courts
 function createCourts(clubs, sports) {
-  const courtsPromises = []
-    courts.forEach(court => {
-      const newCourt = new Court({
-        club: clubs.find((club => club.name === court.club))._id,
-        name: court.name,
-        sports: court.sports.map(sportStr => sports.find(sport => sport.name === sportStr))._id,
-        indoorOrOutdoor: court.indoorOrOutdoor
-      })
+  const createdCourts = []
 
-      courtsPromises.push(newCourt.save())
+  courtsData.forEach(court => {
+    const newCourt = new Court({
+      club: clubs.find(club => club.name === court.club)._id,
+      name: court.name,
+      //sports: court.sports.map(sportStr => sports.find(sport => sport.name === sportStr)._id),
+      indoorOrOutdoor: court.indoorOrOutdoor
     })
 
-    return Promise.all(courtsPromises)
+    createdCourts.push(newCourt.save())
+  })
+
+    return Promise.all(createdCourts)
 }
 
+//Function to create Request
+//function createClubs() {}
+
+//Function to create Match
+//function createClubs() {}
+
+//To delete old data and create new data
 Promise.all([
-  /*Sport.deleteMany(),
+  Sport.deleteMany(),
+  Player.deleteMany(),
   Club.deleteMany(),
   Court.deleteMany(),
-  User.deleteMany(),
-  Request.deleteMany(),
+  /*Request.deleteMany(),
   Match.deleteMany(),
   Message.deleteMany()*/
   ])
   .then(() => {
-    return Sport.create(sports)
+    return Sport.create(sportsData)
   })
-  .then((createdSports) => {
+  .then(createdSports => {
     DDBBSports = createdSports
+    console.log(`${DDBBSports.length} sports created`)
     sportsIds = createdSports.map(sport => sport._id)
-
-    const createdPlayers = []
-    for (let i = 0; i < 30; i++) {
-      const player = new Player({
-        name: faker.name.firstName(),
-        surname: faker.name.lastName(),
-        username: faker.internet.username,
-        email: faker.internet.email(),
-        password: 'sportmeet',
-        photo: faker.image.people(),
-        fairPlay: 0,
-        userType: 'Player',
-        sport: randomSports(sportsIds),
-        validated: true,
-        isAdmin: false
-      })
-      createdPlayers.push(player.save())
-    }
-
-    /* DDBBPlayers = Promise.all(createdPlayers) */
-    return Promise.all(createdPlayers)
+    return createPlayers(sportsIds)
   })
-  .then(players => {
-    DDBBPlayers = players
-    createClubs()
+  .then(createdPlayers => {
+    DDBBPlayers = createdPlayers
+    console.log(`${DDBBPlayers.length} players created`)
+    return createClubs()
   })
   .then(createdClubs => {
     DDBBClubs = createdClubs
+    console.log(`${DDBBClubs.length} clubs created`)
     return createCourts(DDBBClubs, DDBBSports)
   })
   .then(createdCourts => {
+      DDBBCourts = createdCourts
+      console.log(`${DDBBCourts.length} courts created`)
 
   })
+  .catch(console.error)

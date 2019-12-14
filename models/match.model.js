@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const message = require('message.model')
+const message = require('../models/message.model')
 
 const matchSchema = new Schema({
   reference: {

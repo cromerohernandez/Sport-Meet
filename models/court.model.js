@@ -2,26 +2,27 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const courtSchema = new Schema({
-  name: {
-    type: String,
-    required: [True, 'Name is required']
-  },
   club: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Club',
-    required: [True, 'Club is required']
+    ref: 'User',
+    required: [true, 'Club is required']
   },
-  sport: {
+  name: {
+    type: String,
+    required: [true, 'Name is required']
+  },
+  /*sports: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sport',
-    required: [True, 'Sport is required']    
-  },
+    required: [true, 'Sport is required']    
+  },*/
   indoorOrOutdoor: {
+    type: String,
     enum: [
       'indoor',
       'outdoor'
     ],
-    required: [True, 'Indoor/Outdoor is required']
+    required: [true, 'Indoor/Outdoor is required']
   },
 })
 
