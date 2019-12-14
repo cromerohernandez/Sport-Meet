@@ -2,11 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const requestSchema = new Schema({
-  reference: {
-    type: Number,
-    required: [true, 'Reference is required']
-  },
-  user: {
+  player: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Player',
     required: [true, 'Player is required']
@@ -20,6 +16,11 @@ const requestSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Club',
     required: [true, 'Club is required']
+  },
+  court: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Court',
+    required: [true, 'Court is required']
   },
   startTime: {
     type: Date,
