@@ -9,14 +9,6 @@ const matchSchema = new Schema({
     ref: 'Sport',
     required: [true, 'Sport is required']
   },
-  startTime: {
-    type: Date,
-    required: [true, 'StartTime is required']
-  },
-  endTime: {
-    type: Date,
-    required: [true, 'EndTime is required']
-  },
   club: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Club',
@@ -26,6 +18,14 @@ const matchSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Court',
     required: [true, 'Court is required']
+  },
+  startDate: {
+    type: Date,
+    required: [true, 'StartTime is required']
+  },
+  endDate: {
+    type: Date,
+    required: [true, 'EndTime is required']
   },
   confirmed: [
     {

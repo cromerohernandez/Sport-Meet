@@ -22,11 +22,11 @@ const requestSchema = new Schema({
     ref: 'Court',
     required: [true, 'Court is required']
   },
-  startTime: {
+  startDate: {
     type: Date,
     required: [true, 'StartTime is required']
   },
-  endTime: {
+  endDate: {
     type: Date,
     required: [true, 'EndTime is required']
   },

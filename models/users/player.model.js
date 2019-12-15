@@ -24,7 +24,7 @@ const playerSchema = new Schema({
     type: Number,
     default: 0
   },
-  sport: [
+  sports: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Sport',
