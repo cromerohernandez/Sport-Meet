@@ -38,7 +38,7 @@ module.exports.sendValidateEmailForClub = (targetUser) => {
     .catch(error => console.log(error))
 }
 
-module.exports.sendClubReviewToSportmeet = (targetUser) => {
+module.exports.sendClubRequestToAdmin = (targetUser) => {
   transporter.sendMail({
     from: `${targetUser.name} <${targetUser.email}>`,
     to: user,
@@ -48,6 +48,8 @@ module.exports.sendClubReviewToSportmeet = (targetUser) => {
       <ul>
         <li>name: ${targetUser.name}</li>
         <li>address: ${targetUser.address}</li>
+        <li>address: ${targetUser.city}</li>
+
       </ul>
       `
   })
