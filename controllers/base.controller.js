@@ -9,14 +9,24 @@ module.exports.login = (_, res) => {
     firstWord: 'Sport',
     secondWord: 'Meet'
   }
-  res.render('login', title)
+  res.render('login', {title})
 }
 
 module.exports.doLogin = (req, res, next) => {
+
+  const title = {
+    firstWord: 'Sport',
+    secondWord: 'Meet'
+  }
+
   const { email, password } = req.body
 
   if (!email || !password) {
-    return res.render('login', { user: req.body })
+    return res.render('login', {
+      user: req.body,
+      error: { password: 'invalid email or password' },
+      title
+    })
   }
 
   Base.findOne({ email: email, validated: true })
@@ -25,7 +35,8 @@ module.exports.doLogin = (req, res, next) => {
       if (!user) {
         res.render('login', {
           user: req.body,
-          error: { password: 'invalid password' }
+          error: { password: 'invalid email or password' },
+          title
         })
       } else {
         return user.checkPassword(password)
@@ -33,7 +44,8 @@ module.exports.doLogin = (req, res, next) => {
             if (!match) {
               res.render('login', {
                 user: req.body,
-                error: { password: 'invalid password' }
+                error: { password: 'invalid email or password' },
+                title
               })
             } else {
               const {name, surname} = user

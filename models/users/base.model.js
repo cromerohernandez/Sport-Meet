@@ -65,8 +65,12 @@ baseSchema.pre('save', function (next) {
 })
 
 //check if the hashed passwords are equals
-baseSchema.methods.checkPassword = function (password) {
+baseSchema.methods.checkPassword = function(password) {
   return bcrypt.compare(password, this.password)
+}
+
+baseSchema.methods.parseHourToNumber = function(hour) {
+  return Number(hour.slice(0,2))
 }
 
 module.exports = Base
