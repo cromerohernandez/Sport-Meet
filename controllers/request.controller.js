@@ -3,6 +3,7 @@
     - create
 */
 
+const Request = require('../models/request.model')
 const Player = require('../models/users/player.model')
 const Base = require('../models/users/base.model')
 const Sport = require('../models/sport.model')
@@ -13,11 +14,21 @@ module.exports.new = (req, res, next) => {
   const username = req.params.username
   console.log(user)
   console.log(`username => ${username}`)
-  if (user.username === username) {
+  if (user.username === username && user.__type === 'Player') {
+
     const title = {
-      firstWord: 'Sport',
-      secondWord: 'Meet'
+      firstWord: 'New',
+      secondWord: 'Request',
     }
+
+    console.log(user.sports.length)
+
+    if (user.sports.length === 0) {
+      res.redirect(`/players/${username}/sports/new`)
+    } else {
+
+    }
+
     res.render('requests/new', {
       user,
       title

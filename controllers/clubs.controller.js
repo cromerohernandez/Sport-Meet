@@ -62,5 +62,12 @@ module.exports.validate = (req, res, next) => {
 }
 
 module.exports.profile = (req, res, next) => {
-  res.render('clubs/index', {user: req.currentUser})
+  const user = req.session.user
+  const username = req.params.username
+  
+  if (user.username === username) {
+    res.render('clubs/index', {user: req.currentUser})
+  } else {
+    next(error)
+  }
 }

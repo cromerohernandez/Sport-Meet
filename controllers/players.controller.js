@@ -10,6 +10,7 @@
     - new request
 */
 
+const createError = require('http-errors');
 const Player = require('../models/users/player.model')
 const Base = require('../models/users/base.model')
 const Sport = require('../models/sport.model')
@@ -129,6 +130,47 @@ module.exports.profile = (req, res, next) => {
   if (user.username === username) {
     res.render('players/index', {user: req.currentUser})
   } else {
-    next(error)
+    res.redirect(`/players/${user.username}`)
   }
+}
+
+module.exports.newSport = (req, res, next) => {
+  const user = req.session.user
+  const username = req.params.username
+
+  const title = {
+    firstWord: 'Add',
+    secondWord: 'Sport'
+  }
+
+  if (user.username === username && user.__type === 'Player') {
+
+    Sport.find()
+      .then(sport => {
+        res.render('sports/new', {
+          user,
+          sport,
+          title
+        })
+      })
+      .catch(error => next(error))
+  }
+}
+
+module.exports.addNewSport = (req, res, next) => {
+    const user = req.session.user
+    const { body } = req
+    console.log(req.body)
+    Player.findByIdAndUpdate(
+      user._id,
+      {
+        $push: { sports: body.sport }
+      },
+      {new: true}
+    )
+      .then((user) => {
+        console.log(user)
+        res.redirect(`/players/${user.username}`)
+      })
+
 }

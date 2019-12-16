@@ -34,6 +34,8 @@ router.get('/players/new', authMiddleware.isNotAuthenticated, playersController.
 router.post('/players', authMiddleware.isNotAuthenticated, playersController.create)
 router.get('/players/:token/validate', playersController.validate)
 router.get(`/players/:username`, authMiddleware.isAuthenticated, playersController.profile)
+router.get('/players/:username/sports/new', authMiddleware.isAuthenticated, playersController.newSport)
+router.post('/players/:username/sports/new', authMiddleware.isAuthenticated, playersController.addNewSport)
 
 
 
@@ -48,7 +50,7 @@ router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profi
 //POST petition to '/courts' => court function
 // router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.create)
 
-//GET petition to '/request/new' => request function
+//request
 router.get('/players/:username/request/new', authMiddleware.isAuthenticated, requestController.new)
 //POST petition to '/request' => request function
 // router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
@@ -57,8 +59,6 @@ router.get('/players/:username/request/new', authMiddleware.isAuthenticated, req
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)
 //POST petition to '/match/:id/comments' => match function
 // router.post('/match/:id/comments', authMiddleware.isAuthenticated, playMiddleware.isActiveAndNotPlayed, matchController.addComment)
-
-
 
 //GET petition to '/:id' => user function
 // router.get('/:username/:id', authMiddleware.isAuthenticated, userController.profile)
