@@ -1,4 +1,59 @@
-<h1>Welcome {{user.name}} {{user.surname}}</h1><br>
+{{!-- <h1>Welcome {{user.name}} {{user.surname}}</h1><br>
 <form action="/logout" method="post">
   <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
-</form>
+</form> --}}
+
+
+<div class="profile-page container">
+  {{>navbar}}
+    {{>coverImage}}
+<div class="main main-raised">
+  <div class="profile-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto">
+          <div class="profile">
+            <div class="avatar">
+                <img src="{{user.photo}}" alt="Circle Image" class="img-raised rounded img-fluid">
+            </div>
+            <div class="name">
+                <h3 class="user-name">{{user.name}} {{user.surname}} <small>({{user.__type}})</small></h3>
+                <i class="fa fa-twitter"></i></a>
+                <i class="fa fa-twitter"></i></a>
+                <i class="fa fa-twitter"></i></a>
+            </div> 
+          </div>
+        </div>
+      </div>
+      <div class="description text-center">
+        <p>..........user's bio.........</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+          <div class="profile-tabs">
+            <ul class="nav nav-pills nav-pills-icons justify-content-center">
+              <li class="nav-item">
+                  <a class="nav-link active" href="/players/{{user.username}}/request/new">
+                    <i class="request-match-btn">New request</i>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="">
+                    <i class="request-match-btn">Match</i>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/players/{{user.username}}/sports/new">
+                    <i class="request-match-btn">Add sports</i>
+                  </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+	</div>
+  {{>footer}}
+</div>

@@ -5,7 +5,7 @@ const requestSchema = new Schema({
   player: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Player',
-    required: [true, 'Player is required']
+    required: [true, 'Player name is wrong!']
   },
   sport: {
     type: mongoose.Schema.Types.ObjectId,
@@ -16,11 +16,6 @@ const requestSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Club',
     required: [true, 'Club is required']
-  },
-  court: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Court',
-    required: [true, 'Court is required']
   },
   startDate: {
     type: Date,

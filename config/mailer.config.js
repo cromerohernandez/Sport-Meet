@@ -48,12 +48,26 @@ module.exports.sendClubRequestToAdmin = (targetUser) => {
       <ul>
         <li>name: ${targetUser.name}</li>
         <li>address: ${targetUser.address}</li>
-        <li>address: ${targetUser.city}</li>
-
+        <li>city: ${targetUser.city}</li>
       </ul>
+      <a href='${APP_HOST}/clubs/${targetUser.activationToken}/validate'>Confirm account</a>
+
       `
   })
     .then(info => console.log(info))
     .catch(error => console.log(error))
 }
 
+module.exports.validateClub = (targetUser) => {
+  transporter.sendMail({
+    from: `"SportMeet" <${user}>`,
+    to: targetUser.email,
+    subject: 'Your club has been confirmed!',
+    html: `
+      <h1>Welcome</h1>
+      <a href='${APP_HOST}/login'>Log in</a>
+    `
+  })
+    .then(info => console.log(info))
+    .catch(error => console.log(error))
+}

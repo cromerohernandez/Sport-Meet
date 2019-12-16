@@ -3,6 +3,15 @@ const createError = require('http-errors');
 const Base = require('../models/users/base.model')
 const mongoose = require('mongoose');
 
+module.exports.index = (req, res, next) => {
+  const user = req.session.user
+  if (user.__type === 'Club'){
+    res.redirect(`/clubs/${user.name}`)
+  } else {
+    res.redirect(`/players/${user.username}`)
+  }
+}
+
 // render the home page
 module.exports.login = (_, res) => {
   const title = {
@@ -48,10 +57,12 @@ module.exports.doLogin = (req, res, next) => {
                 title
               })
             } else {
-              const {name, surname} = user
               req.session.user = user;
-              req.session.genericSuccess = 'Welcome!'
-              res.redirect('/');
+              if (user.__type === 'Club'){
+                res.redirect(`/clubs/${user.name}`)
+              } else {
+                res.redirect(`/players/${user.username}`)
+              }
             }
           })
       }
@@ -66,10 +77,6 @@ module.exports.doLogin = (req, res, next) => {
         next(error);
       }
     });
-}
-
-module.exports.index = (req, res, next) => {
-  res.render('players/index', {user: req.currentUser})
 }
 
 module.exports.logout = (req, res) => {

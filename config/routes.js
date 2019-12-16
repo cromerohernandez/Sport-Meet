@@ -23,39 +23,35 @@ const authMiddleware = require('../middlewares/auth.middleware')
 //playMiddleware
 const playMiddleware = require('../middlewares/play.middleware')
 
+//base
 router.get('/', authMiddleware.isAuthenticated, baseController.index)
-//GET petition to 'login' => base function
 router.get('/login', authMiddleware.isNotAuthenticated, baseController.login)
-//POST do login
 router.post('/login', authMiddleware.isNotAuthenticated, baseController.doLogin)
-//POST petition to '/logout' => user function
 router.post('/logout', authMiddleware.isAuthenticated, baseController.logout)
 
-//GET petition to '/users/new' => user function
+//players
 router.get('/players/new', authMiddleware.isNotAuthenticated, playersController.new)
-//POST petition to '/users' => user function
 router.post('/players', authMiddleware.isNotAuthenticated, playersController.create)
-//GET petition to '/users/:token/validate' => user function
 router.get('/players/:token/validate', playersController.validate)
-//GET petition to '/login' => user function
-// router.get('/login', authMiddleware.isNotAuthenticated, playersController.login)
-// //POST petition to '/login' => user function
-// router.post('/login', authMiddleware.isNotAuthenticated, playersController.doLogin)
+router.get(`/players/:username`, authMiddleware.isAuthenticated, playersController.profile)
+router.get('/players/:username/sports/new', authMiddleware.isAuthenticated, playersController.newSport)
+router.post('/players/:username/sports/new', authMiddleware.isAuthenticated, playersController.addNewSport)
 
 
-//GET petition to '/users/new' => user function
+
+//clubs
 router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
-//POST petition to '/users/new' => user function
 router.post('/clubs', authMiddleware.isNotAuthenticated, clubsController.create)
-
+router.get('/clubs/:token/validate', clubsController.validate)
+router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profile)
 
 //GET petition to '/courts/new' => court function
 // router.get('/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
 //POST petition to '/courts' => court function
 // router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.create)
 
-//GET petition to '/request/new' => request function
-// router.get('/request/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.new)
+//request
+router.get('/players/:username/request/new', authMiddleware.isAuthenticated, requestController.new)
 //POST petition to '/request' => request function
 // router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
 
@@ -63,8 +59,6 @@ router.post('/clubs', authMiddleware.isNotAuthenticated, clubsController.create)
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)
 //POST petition to '/match/:id/comments' => match function
 // router.post('/match/:id/comments', authMiddleware.isAuthenticated, playMiddleware.isActiveAndNotPlayed, matchController.addComment)
-
-
 
 //GET petition to '/:id' => user function
 // router.get('/:username/:id', authMiddleware.isAuthenticated, userController.profile)

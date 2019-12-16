@@ -1,4 +1,5 @@
 const Club = require('../models/users/club.model')
+const Base = require('../models/users/base.model')
 const mongoose = require('mongoose');
 
 const mailer = require('../config/mailer.config');
@@ -18,13 +19,10 @@ module.exports.create = (req, res, next) => {
     city: req.body.city,
     email: req.body.email,
     password: req.body.password,
-    openingTime: req.body.openingTime,
-    closingTime: req.body.closingTime,
+    openingTime: Number((req.body.openingTime).slice(0,2)),
+    closingTime: Number((req.body.closingTime).slice(0,2)),
     photo: req.file ? req.file.url : undefined
   })
-
-  // user.openingTime = user.parseHourToNumber(openingTime)
-  // user.closingTime = user.parseHourToNumber(closingTime)
 
   user.save()
     .then(user => {
@@ -43,4 +41,33 @@ module.exports.create = (req, res, next) => {
         next(error);
       }
     })
+}
+
+module.exports.validate = (req, res, next) => {
+  Base.findOne({ activationToken: req.params.token })
+    .then(user => {
+      if (user) {
+        mailer.validateClub(user)
+        user.validated = true
+        user.save()
+          .then(() => {
+            res.redirect('/login')
+          })
+          .catch(next)
+      } else {
+        res.redirect('/')
+      }
+    })
+    .catch(next)
+}
+
+module.exports.profile = (req, res, next) => {
+  const user = req.session.user
+  const username = req.params.username
+  
+  if (user.username === username) {
+    res.render('clubs/index', {user: req.currentUser})
+  } else {
+    next(error)
+  }
 }

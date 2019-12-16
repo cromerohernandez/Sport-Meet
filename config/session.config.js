@@ -11,16 +11,21 @@ const uuid = require('uuid/v4')
 const mongoose = require('mongoose')
 
 //if "npm run dev", it will create an ID
-const sessionSecret = process.env.NODE_ENV === 'dev' ? uuid() : process.env.SECRET_SESSION
+let sessionSecret = (!process.env.SECRET_SESSION && process.env.NODE_ENV === 'dev') ?  uuid() : process.env.SECRET_SESSION
+
+console.log(sessionSecret)
 
 if (!sessionSecret) throw new Error('Env var SECRET_SESSION not found or invalid')
 
 module.exports = session({
   secret: sessionSecret,
+  resave: true,
+  saveUninitialized: true,
   cookie: { 
     maxAge: 24 * 60 * 60 * 1000 // 1 day
   },
   store: new MongoStore({
+    useUnifiedTopology: true,
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60 // 1 day
   })

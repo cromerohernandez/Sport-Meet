@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
+const randToken = require('rand-token')
 const SALT_WORK_FACTOR = 10
 const uniqueValidator = require('mongoose-unique-validator')
 
@@ -32,7 +33,11 @@ const baseSchema = new Schema({
   },
   photo: {
     type: String,
-    default: '../../public/images/defaultUser.png'
+    default: '../../images/defaultUser.png'
+  },
+  activationToken: {
+    type: String,
+    default: () => randToken.generate(64)
   },
   validated: {
     type: Boolean,
