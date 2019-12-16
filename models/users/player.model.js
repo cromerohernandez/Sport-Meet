@@ -3,7 +3,6 @@ const Schema = mongoose.Schema
 
 require('../../config/db.config')
 const Base = require('./base.model')
-const randToken = require('rand-token')
 const uniqueValidator = require('mongoose-unique-validator')
 
 //Player schema
@@ -24,7 +23,7 @@ const playerSchema = new Schema({
     type: Number,
     default: 0
   },
-  sport: [
+  sports: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Sport',
@@ -37,10 +36,6 @@ const playerSchema = new Schema({
       }
     }
   ],
-  activationToken: {
-    type: String,
-    default: () => randToken.generate(64)
-  },
   isAdmin: {
     type: Boolean,
     default: false

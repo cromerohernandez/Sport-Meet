@@ -1,14 +1,17 @@
 /* TODO:
     - new √
-    - create
-    - validate
-    - login
-    - doLogin
-    - logout
-    - profile
+    - create √
+    - validate √
+    - login √
+    - doLogin √
+    - logout √
+    - profile √
+    - add sport
+    - new request
 */
 
 const Player = require('../models/users/player.model')
+const Base = require('../models/users/base.model')
 const Sport = require('../models/sport.model')
 const mongoose = require('mongoose');
 
@@ -118,4 +121,14 @@ module.exports.doLogin = (req, res, next) => {
         next(error);
       }
     });
+}
+
+module.exports.profile = (req, res, next) => {
+  const user = req.session.user
+  const username = req.params.username
+  if (user.username === username) {
+    res.render('players/index', {user: req.currentUser})
+  } else {
+    next(error)
+  }
 }
