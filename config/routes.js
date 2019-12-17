@@ -34,10 +34,12 @@ router.get('/players/new', authMiddleware.isNotAuthenticated, playersController.
 router.post('/players', authMiddleware.isNotAuthenticated, playersController.create)
 router.get('/players/:token/validate', playersController.validate)
 router.get(`/players/:username`, authMiddleware.isAuthenticated, playersController.profile)
-router.get('/players/:username/sports/new', authMiddleware.isAuthenticated, playersController.newSport)
-router.post('/players/:username/sports/new', authMiddleware.isAuthenticated, playersController.addNewSport)
+router.get('/players/:username/sports/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, playersController.newSport)
+router.post('/players/:username/sports/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, playersController.addNewSport)
 
-
+//request
+router.get('/players/:username/request/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.selectSport)
+router.get('/players/:username/request/new/:sport', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.new)
 
 //clubs
 router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
@@ -45,24 +47,14 @@ router.post('/clubs', authMiddleware.isNotAuthenticated, clubsController.create)
 router.get('/clubs/:token/validate', clubsController.validate)
 router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profile)
 
-//request
-router.get('/players/:username/request/new', authMiddleware.isAuthenticated, requestController.new)
-
-//POST petition to '/request' => request function
-// router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
-
-//GET petition to '/courts/new' => court function
-// router.get('/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
-//POST petition to '/courts' => court function
-// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.create)
+//courts
+router.get('/clubs/:name/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
+// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.add)
 
 //GET petition to '/match/:id' => match function
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)
 //POST petition to '/match/:id/comments' => match function
 // router.post('/match/:id/comments', authMiddleware.isAuthenticated, playMiddleware.isActiveAndNotPlayed, matchController.addComment)
-
-//GET petition to '/:id' => user function
-// router.get('/:username/:id', authMiddleware.isAuthenticated, userController.profile)
 
 //we export 'router' so it can be used into app.js file
 module.exports = router;

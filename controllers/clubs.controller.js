@@ -51,6 +51,7 @@ module.exports.validate = (req, res, next) => {
         user.validated = true
         user.save()
           .then(() => {
+            req.session.genericSuccess = "Your account has been validated!"
             res.redirect('/login')
           })
           .catch(next)
@@ -68,6 +69,6 @@ module.exports.profile = (req, res, next) => {
   if (user.username === username) {
     res.render('clubs/index', {user: req.currentUser})
   } else {
-    next(error)
+    res.redirect(`/clubs/${user.username}`)
   }
 }

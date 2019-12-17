@@ -143,7 +143,7 @@ module.exports.newSport = (req, res, next) => {
     secondWord: 'Sports'
   }
 
-  if (user.username === username && user.__type === 'Player') {
+  if (user.username === username) {
 
     Sport.find()
       .then(sport => {

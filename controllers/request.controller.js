@@ -15,7 +15,7 @@ const Club = require('../models/users/club.model')
     secondWord: 'Request',
   }
 
-  if (user.username === username  && user.__type === 'Player') {
+  if (user.username === username) {
     Player.findOne({username: user.username})
     .populate('sports')
     .then(user => {
@@ -39,7 +39,7 @@ const Club = require('../models/users/club.model')
 }*/
 
 
-module.exports.new = (req, res, next) => {
+module.exports.selectSport = (req, res, next) => {
   const user = req.session.user
   const username = req.params.username
   const title = {
@@ -47,7 +47,7 @@ module.exports.new = (req, res, next) => {
     secondWord: 'Request',
   }
 
-  if (user.username === username  && user.__type === 'Player') {
+  if (user.username === username) {
     Player.findOne({username: user.username})
     .populate('sports')
     .then(user => {
@@ -65,3 +65,5 @@ module.exports.new = (req, res, next) => {
     })
   }
 }
+
+module.exports.new = (req, res, next) => {}

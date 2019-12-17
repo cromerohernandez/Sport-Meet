@@ -23,7 +23,7 @@ module.exports.isPlayer = (req, res, next) => {
     next()
   } else {
     req.session.genericError = 'User is not a player'
-    res.redirect('/:username/:id')
+    res.redirect('/clubs/:username')
   }
 }
 
@@ -32,7 +32,8 @@ module.exports.isClub = (req, res, next) => {
   if (req.session.user.__type === "Club") {
     next()
   } else {
+    console.log('STOP!!!!!')
     req.session.genericError = 'User is not a club'
-    res.redirect('/:username/:id')
+    res.redirect('/players/:username')
   }
 }
