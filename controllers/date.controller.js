@@ -43,7 +43,7 @@ module.exports.randomTime = (typeTime, lagDays, hoursMillsec, minutesMillsec) =>
   }
 
   const daysRandomTimeMillsec = (Math.floor(originRandomTime / (24 * 60 * 60 * 1000))) * (24 * 60 * 60 * 1000)
-  console.log(daysRandomTimeMillsec / (24 * 60 * 60 * 1000))   /////////////////////////////////////////////////////////////////////////////////////////////
+  //console.log(daysRandomTimeMillsec / (24 * 60 * 60 * 1000))   /////////////////////////////////////////////////////////////////////////////////////////////
   let finalRandomTimeMillSec = daysRandomTimeMillsec + hoursMillsec + minutesMillsec
   return finalRandomTimeMillSec
 }
