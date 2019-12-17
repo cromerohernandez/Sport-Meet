@@ -28,6 +28,7 @@ module.exports.create = (req, res, next) => {
     .then(user => {
       mailer.sendValidateEmailForClub(user)
       mailer.sendClubRequestToAdmin(user)
+      req.session.genericSuccess = "An email has been sent"
       res.redirect('/login')
     })
     .catch(error => {
@@ -64,7 +65,7 @@ module.exports.validate = (req, res, next) => {
 module.exports.profile = (req, res, next) => {
   const user = req.session.user
   const username = req.params.username
-  
+
   if (user.username === username) {
     res.render('clubs/index', {user: req.currentUser})
   } else {

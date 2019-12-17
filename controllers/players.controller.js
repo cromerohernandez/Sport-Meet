@@ -158,19 +158,36 @@ module.exports.newSport = (req, res, next) => {
 }
 
 module.exports.addNewSport = (req, res, next) => {
-    const user = req.session.user
+    let { user } = req.session
+    user = new User(user.id)
+    const userData = user.get()
+    
     const { body } = req
-    console.log(req.body)
-    Player.findByIdAndUpdate(
-      user._id,
-      {
-        $push: { sports: body.sport }
-      },
-      {new: true}
-    )
-      .then((user) => {
-        console.log(user)
-        res.redirect(`/players/${user.username}`)
-      })
+
+    console.log(user)
+    if (!user.sports.includes(body.sport)){
+      console.log(req.body)
+      Player.findByIdAndUpdate(
+        user._id,
+        {
+          $push: { sports: body.sport }
+        },
+        {new: true}
+      )
+        .populate('sports')
+        .then((user) => {
+          const addedSport = user.sports.filter(sport => {
+            if (sport.id === body.sport) {
+              return sport.name
+            }
+          })
+          req.session.genericSuccess = `'${addedSport[0].name}' has been added on your list!`
+          res.redirect(`/players/${user.username}/sports/new`)
+        })
+    } else {
+      req.session.genericError = 'This sport is already on your list!'
+      res.redirect(`/players/${user.username}/sports/new`)
+    }
 
 }
+

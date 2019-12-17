@@ -1,4 +1,5 @@
 <div class="container">
+  {{>navbar}}
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
 	      <form action="/players/{{user.username}}/sports/new" method="POST">
@@ -17,5 +18,4 @@
 	      </form>
 	    </div>
     </div>
-    {{>footer}}
 </div>
