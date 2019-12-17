@@ -1,4 +1,22 @@
-<nav class="navbar navbar-light bg-light">
+{{!-- <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand">LOGO SPORTMEET</a>
-  {{>logout}}
+  <div>
+    {{>logout}}
+    <a href="">Home</a>
+  </div>
+</nav> --}}
+
+<nav class="d-flex bd-highlight mb-3 navbar navbar-light">
+  <div class="mr-auto p-2 bd-highlight navbar-brand">
+    LOGO SPORTMEET
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="/">Home</a>
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="">Edit profile</a>
+  </div>
+  <div class="p-2 bd-highlight">
+    {{>logout}}
+  </div>
 </nav>

@@ -22,6 +22,8 @@ module.exports = session({
   resave: true,
   saveUninitialized: true,
   cookie: { 
+    secure: process.env.SESSION_SECURE || false,
+    httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 1 day
   },
   store: new MongoStore({

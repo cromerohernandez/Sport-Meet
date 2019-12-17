@@ -1,14 +1,10 @@
 <div class="container">
+  {{>navbar}}
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
 	      <form action="/players/{{user.username}}/sports/new" method="POST">
           {{>titleForm}}
-          <label>Add a sport:</label>
-            <select name="sport">
-              {{#each sport as |sport|}}
-                <option value="{{sport.id}}" id="{{sport.id}}">{{sport.name}}</option>
-              {{/each}}
-            </select>
+          {{>sportsForm}}
 		      <div class="row">
 		        <div class="col-md-12 login-from-row">
 		          <button class="btn btn-info">Add</button>
@@ -17,5 +13,4 @@
 	      </form>
 	    </div>
     </div>
-    {{>footer}}
 </div>
