@@ -47,6 +47,7 @@ router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profi
 
 //request
 router.get('/players/:username/request/new', authMiddleware.isAuthenticated, requestController.new)
+
 //POST petition to '/request' => request function
 // router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
 

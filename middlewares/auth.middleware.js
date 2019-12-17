@@ -16,3 +16,23 @@ module.exports.isNotAuthenticated = (req, res, next) => {
     next()
   }
 }
+
+//check if current user is a Player
+module.exports.isPlayer = (req, res, next) => {
+  if (req.session.user.__type === "Player") {
+    next()
+  } else {
+    req.session.genericError = 'User is not a player'
+    res.redirect('/:username/:id')
+  }
+}
+
+//check if current user is a Club
+module.exports.isClub = (req, res, next) => {
+  if (req.session.user.__type === "Club") {
+    next()
+  } else {
+    req.session.genericError = 'User is not a club'
+    res.redirect('/:username/:id')
+  }
+}
