@@ -50,10 +50,9 @@ router.get('/players/:username/request/new', authMiddleware.isAuthenticated, req
 //POST petition to '/request' => request function
 // router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
 
-//GET petition to '/courts/new' => court function
-// router.get('/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
-//POST petition to '/courts' => court function
-// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.create)
+//courts
+router.get('/clubs/:name/courts/new', authMiddleware.isAuthenticated, courtsController.new)
+// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.add)
 
 //GET petition to '/match/:id' => match function
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)

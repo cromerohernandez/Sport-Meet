@@ -2,8 +2,8 @@
   <div class="col-md-12 login-from-row">
     <label>choose a sport:</label>
     <select name="sport">
-      {{#each sport as |sport|}}
-        <option value="{{sport.id}}" id="{{sport.id}}">{{sport.name}}</option>
+      {{#each sports as |sport|}}
+        <option name="{{sport.name}}" value="{{sport.id}}" id="{{sport.id}}">{{sport.name}}</option>
       {{/each}}
     </select>
   </div>
