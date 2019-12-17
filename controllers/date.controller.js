@@ -30,3 +30,20 @@ module.exports.newFutureDate = (hours, minutes) => {
   const finalHours = hours + 1
   return new Date(randomFutureYear, randomFutureMonth, randomFutureDay, finalHours, minutes)
 }
+
+//To create a random past/future Time in Milliseconds from current date, with hours and minutes indicated, in UTC+1 (Spain-WinterTime)
+module.exports.randomTime = (typeTime, lagDays, hoursMillsec, minutesMillsec) => {
+  const currentTime = Date.now()
+  let originRandomTime = 0
+
+  if (typeTime === "past") {
+    originRandomTime = currentTime - ((Math.floor(Math.random() * (lagDays - 1)) + 1) * (24 * 60 * 60 * 1000))
+  } else if (typeTime === "future") {
+    originRandomTime = currentTime + ((Math.floor(Math.random() * (lagDays - 1)) + 1) * (24 * 60 * 60 * 1000))
+  }
+
+  const daysRandomTimeMillsec = (Math.floor(originRandomTime / (24 * 60 * 60 * 1000))) * (24 * 60 * 60 * 1000)
+  //console.log(daysRandomTimeMillsec / (24 * 60 * 60 * 1000))   /////////////////////////////////////////////////////////////////////////////////////////////
+  let finalRandomTimeMillSec = daysRandomTimeMillsec + hoursMillsec + minutesMillsec
+  return finalRandomTimeMillSec
+}
