@@ -19,11 +19,11 @@ const requestSchema = new Schema({
   },
   startDate: {
     type: Date,
-    required: [true, 'StartTime is required']
+    required: [true, 'StartDate is required']
   },
   endDate: {
     type: Date,
-    required: [true, 'EndTime is required']
+    required: [true, 'EndDate is required']
   },
   active: {
     type: Boolean,

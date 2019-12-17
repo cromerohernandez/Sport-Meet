@@ -1,11 +1,13 @@
 //seeds´s const
-const PLAYERS = 2 //=> number of random players to create
-const PASTREQUESTS = 20 //=> number of random past requests to create
-const ACTIVEREQUESTS = 15 //=> number of random active requests to create
-const PASTMACHES = 30 //=> number of random past matches to create
-const ACTIVEMACHES = 25 //=> number of random active matches to create
-const MAXDURATIONREQUEST = 5 //=> maximum number of hours of a request
-const MAXDURATIONMATCH = 3 //=> maximum number of hours of a match
+const PLAYERS = 2  //=> number of random players to create
+const MAXPASTDAYS = 365 * 3  //=> maximum number of lag days to create a random past request/match
+const MAXFUTUREDAYS = 30  //=> maximum number of lag days to create a random future request/match
+const MAXDURATIONREQUEST = 5  //=> maximum number of hours of a request
+const PASTREQUESTS = 20  //=> number of random past requests to create
+const ACTIVEREQUESTS = 15  //=> number of random active requests to create
+const MAXDURATIONMATCH = 3  //=> maximum number of hours of a match
+const PASTMATCHES = 30  //=> number of random past matches to create
+const ACTIVEMATCHES = 25  //=> number of random active matches to create
 
 //controller to manage dates
 const dateController = require('../controllers/date.controller')
@@ -49,39 +51,20 @@ function randomItemArray(arr) {
   return arr[n]
 }
 
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Function to select a random player/court for a sport
 function randomItemForSport(DDBBarr, sportId) {
   const randomOrderArr = ([...DDBBarr].sort(() => Math.random() - 0.5))
-  let randomItem = {}
+  let itemSelected
   for (let i = 0; i < randomOrderArr.length; i++) {
-    randomOrderArr[i].sports.forEach(function(itemSport) {
-      if (itemSport === sportId) {
-        randomItem = randomOrderArr[i] 
-        return
+    for (let j = 0; j < randomOrderArr[i].sports.length; j++) {
+      if (randomOrderArr[i].sports[j] === sportId) {
+        itemSelected = randomOrderArr[i]
+        break
       }
-    })
-    return
-  }
-  return randomItem
-}
-
-//Function to select a random player/court for a sport
-function randomItemForSport(DDBBarr, sportId) {
-  const randomOrderArr = ([...DDBBarr].sort(() => Math.random() - 0.5))
-  //let randomItem = {}
-  for (let i = 0; i < randomOrderArr.length; i++) {
-    //randomItem = randomOrderArr[i]
-    if (randomOrderArr[i].sports.find(sport => sport === sportId)) {
-      return randomOrderArr[i]
     }
   }
+  return itemSelected
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 //Arrays that receive created data to use to create the next data
 let DDBBSports = []
@@ -163,33 +146,57 @@ function createRequests(playersArr, clubsArr, courtsArr) {
   const createdPastRequests = []
   const createdFutureRequests = []
 
-  //To create past requests
+  /*//To create past requests
   for(let i = 0; i < PASTREQUESTS; i++) {
     const randomPlayer = randomItemArray(playersArr)
     const selectedSportId = randomItemArray(randomPlayer.sports)
     const selectedCourt = randomItemForSport(courtsArr, selectedSportId)
-    console.log(selectedCourt) //////////////////////////////////////////////////////////////////////////
     const selectedClub = clubsArr.find(club => club._id === selectedCourt.club)
-    console.log(selectedClub) //////////////////////////////////////////////////////////////////////////
     const randomDuration = Math.floor((Math.random() * MAXDURATIONREQUEST) + 1)
-    console.log(randomDuration) //////////////////////////////////////////////////////////////////////////
-    const selectedStartTime = Math.floor((Math.random * ((selectedClub.closingTime - randomDuration) - selectedClub.openingTime)) + selectedClub.openingTime)
-    const randomDate = dateController.newPastDate(selectedStartTime, 0)
+    const selectedStartTime = Math.floor((Math.random() * ((selectedClub.closingTime - randomDuration) - selectedClub.openingTime)) + selectedClub.openingTime)
+    const randomStartDate = dateController.newPastDate(selectedStartTime, 0)
+    const copyRandomStartDate = new Date(randomStartDate.getTime())
+    const randomEndDate = new Date(copyRandomStartDate.setHours(copyRandomStartDate.getHours() + randomDuration))
 
     const newPastRequest = new Request({
       player: randomPlayer._id,
       sport: selectedSportId,
       club: selectedCourt.club,
-      court: selectedCourt._id,
-      startDate: randomDate,
-      endDate: randomDate.setHours(randomDate.getHours() + randomDuration),
+      startDate: randomStartDate,
+      endDate: randomEndDate,
+      active: false
+    })
+
+    createdPastRequests.push(newPastRequest.save())
+  }*/
+
+  //To create past requests
+  for(let i = 0; i < PASTREQUESTS; i++) {
+    const randomPlayer = randomItemArray(playersArr)
+    const selectedSportId = randomItemArray(randomPlayer.sports)
+    const selectedCourt = randomItemForSport(courtsArr, selectedSportId)
+    const selectedClub = clubsArr.find(club => club._id === selectedCourt.club)
+    const randomDurationTime = (Math.floor((Math.random() * MAXDURATIONREQUEST)) + 1) * (60 * 60 * 1000)
+    const selectedOpeningTime = selectedClub.openingTime * (60 * 60 * 1000)
+    const selectedClosingTime = selectedClub.closingTime * (60 * 60 * 1000)
+    const selectedStartTime = Math.floor(Math.random() * ((selectedClosingTime - randomDurationTime) - selectedOpeningTime)) + selectedOpeningTime
+    const randomStartTime = dateController.randomTime("past", MAXPASTDAYS, 11, 0)
+    const randomEndTime = randomStartTime + randomDurationTime
+
+    const newPastRequest = new Request({
+      player: randomPlayer._id,
+      sport: selectedSportId,
+      club: selectedCourt.club,
+      startDate: new Date(randomStartTime),
+      endDate: new Date(randomEndTime),
       active: false
     })
 
     createdPastRequests.push(newPastRequest.save())
   }
 
-  return Promise.all(createdPastRequests)
+  DDBBRequests = createdPastRequests
+  console.log(`${DDBBRequests.length} requests created`)
 }
 
 //Function to create Matches
@@ -204,8 +211,8 @@ Promise.all([
   Player.deleteMany(),
   Club.deleteMany(),
   Court.deleteMany(),
-  /*Request.deleteMany(),
-  Match.deleteMany(),
+  Request.deleteMany(),
+  /*Match.deleteMany(),
   Message.deleteMany()*/
   ])
   .then(() => {
@@ -231,8 +238,6 @@ Promise.all([
     DDBBCourts = createdCourts
     console.log(`${DDBBCourts.length} courts created`)
     createRequests(DDBBPlayers, DDBBClubs, DDBBCourts)
-    DDBBRequests = createdPastRequests
-    //console.log(`${DDBBRequests.length} requests created`)
   })
   .catch(error => console.log(error))
 /*    .then(() => {
