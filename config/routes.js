@@ -45,15 +45,15 @@ router.post('/clubs', authMiddleware.isNotAuthenticated, clubsController.create)
 router.get('/clubs/:token/validate', clubsController.validate)
 router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profile)
 
-//GET petition to '/courts/new' => court function
-// router.get('/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
-//POST petition to '/courts' => court function
-// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.create)
-
 //request
 router.get('/players/:username/request/new', authMiddleware.isAuthenticated, requestController.new)
 //POST petition to '/request' => request function
 // router.post('/request', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.create)
+
+//GET petition to '/courts/new' => court function
+// router.get('/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
+//POST petition to '/courts' => court function
+// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.create)
 
 //GET petition to '/match/:id' => match function
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)

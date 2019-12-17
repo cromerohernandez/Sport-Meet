@@ -1,5 +1,4 @@
 //to handle errors
-const createError = require('http-errors');
 const Base = require('../models/users/base.model')
 const mongoose = require('mongoose');
 

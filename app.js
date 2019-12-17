@@ -16,6 +16,7 @@ const logger = require('morgan')
 //Node.js module. HTTP request logger middleware to use req.cookies
 const cookieParser = require('cookie-parser');
 
+const alertMiddleware = require('./middlewares/alert.middleware')
 
 /**
  * Handlebars, session and Mongoose config
@@ -54,6 +55,8 @@ app.use((req, res, next) => {
   req.currentUser = req.session.user
   next()
 })
+
+app.use(alertMiddleware)
 
 /**
  * View engine setup
