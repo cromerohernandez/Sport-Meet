@@ -5,35 +5,33 @@
 
 const Request = require('../models/request.model')
 const Player = require('../models/users/player.model')
-const Base = require('../models/users/base.model')
-const Sport = require('../models/sport.model')
-const mongoose = require('mongoose');
 
 module.exports.new = (req, res, next) => {
   const user = req.session.user
   const username = req.params.username
-  console.log(user)
-  console.log(`username => ${username}`)
-  if (user.username === username && user.__type === 'Player') {
+  const title = {
+    firstWord: 'New',
+    secondWord: 'Request',
+  }
 
-    const title = {
-      firstWord: 'New',
-      secondWord: 'Request',
-    }
-
-    console.log(user.sports.length)
-
-    if (user.sports.length === 0) {
-      res.redirect(`/players/${username}/sports/new`)
-    } else {
-
-    }
-
-    res.render('requests/new', {
-      user,
-      title
+  if (user.username === username  && user.__type === 'Player') {
+    Player.findOne({username: user.username})
+    .populate('sports')
+    .populate('club')
+    .then(user => {
+      if (user.sports.length === 0) {
+        req.session.genericError = "You don't have any favourite sport yet. Add at least one sport"
+        res.redirect(`/players/${username}/sports/new`)
+      } else {
+        const sport = user.sports
+        const club = user.club
+        res.render('requests/new', {
+          title,
+          user,
+          sport,
+          club
+        })
+      }
     })
-  } else {
-    next(error)
   }
 }

@@ -12,7 +12,6 @@
 
 const createError = require('http-errors');
 const Player = require('../models/users/player.model')
-const Base = require('../models/users/base.model')
 const Sport = require('../models/sport.model')
 const mongoose = require('mongoose');
 
@@ -45,6 +44,7 @@ module.exports.create = (req, res, next) => {
   user.save()
     .then(user => {
       mailer.sendValidateEmail(user)
+      req.session.genericSuccess = "A validation email has been sent"
       res.redirect('/login')
     })
     .catch(error => {
@@ -55,7 +55,7 @@ module.exports.create = (req, res, next) => {
           error: error.errors 
         })
       } else {
-        next(error);
+        next(error)
       }
     })
   }  
@@ -67,6 +67,7 @@ module.exports.validate = (req, res, next) => {
         user.validated = true
         user.save()
           .then(() => {
+            req.session.genericSuccess = "Your account has been validated!"
             res.redirect('/login')
           })
           .catch(next)
@@ -105,9 +106,9 @@ module.exports.doLogin = (req, res, next) => {
                 error: { password: 'invalid password' }
               })
             } else {
-              req.session.user = user;
+              req.session.user = user
               req.session.genericSuccess = 'Welcome!'
-              res.redirect('/');
+              res.redirect('/')
             }
           })
       }
@@ -119,7 +120,7 @@ module.exports.doLogin = (req, res, next) => {
           error: error.errors
         })
       } else {
-        next(error);
+        next(error)
       }
     });
 }
@@ -137,10 +138,9 @@ module.exports.profile = (req, res, next) => {
 module.exports.newSport = (req, res, next) => {
   const user = req.session.user
   const username = req.params.username
-
   const title = {
-    firstWord: 'Add',
-    secondWord: 'Sport'
+    firstWord: 'Handle',
+    secondWord: 'Sports'
   }
 
   if (user.username === username && user.__type === 'Player') {
@@ -158,36 +158,44 @@ module.exports.newSport = (req, res, next) => {
 }
 
 module.exports.addNewSport = (req, res, next) => {
-    let { user } = req.session
-    user = new User(user.id)
-    const userData = user.get()
-    
-    const { body } = req
+  const user = req.session.user
+  const { body } = req
 
-    console.log(user)
-    if (!user.sports.includes(body.sport)){
-      console.log(req.body)
-      Player.findByIdAndUpdate(
-        user._id,
-        {
-          $push: { sports: body.sport }
-        },
-        {new: true}
-      )
+  Player.findOne({username: user.username})
+    .then(user => {
+      if (!user.sports.includes(body.sport)){
+        console.log(req.body)
+        Player.findByIdAndUpdate(
+          user._id,
+          {
+            $push: { sports: body.sport }
+          },
+          {new: true}
+        )
         .populate('sports')
         .then((user) => {
-          const addedSport = user.sports.filter(sport => {
+          const addedSport = user.sports.reduce((_, sport) => {
             if (sport.id === body.sport) {
               return sport.name
             }
-          })
-          req.session.genericSuccess = `'${addedSport[0].name}' has been added on your list!`
+          }, '')
+          req.session.genericSuccess = `'${addedSport}' has been added on your list!`
           res.redirect(`/players/${user.username}/sports/new`)
         })
-    } else {
-      req.session.genericError = 'This sport is already on your list!'
-      res.redirect(`/players/${user.username}/sports/new`)
-    }
-
+        .catch(error => next(error))
+      } else {
+        Player.findOne({username: user.username})
+        .populate('sports')
+        .then(user => {
+          const allSports = user.sports.map(sports => {
+            return sports.name
+          })
+          req.session.genericError = `This sport is already on your list.
+            Your favorite sports are: ${allSports}`
+          res.redirect(`/players/${user.username}/sports/new`)
+        })
+        .catch(error => next(error))
+      }
+    })
 }
 

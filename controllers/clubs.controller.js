@@ -33,7 +33,6 @@ module.exports.create = (req, res, next) => {
     })
     .catch(error => {
       if (error instanceof mongoose.Error.ValidationError) {
-        // console.log(error.errors)
         res.render('clubs/form', { 
           user, 
           error: error.errors 
