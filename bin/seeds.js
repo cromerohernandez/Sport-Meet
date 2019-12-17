@@ -227,13 +227,13 @@ Promise.all([
     console.log(`${DDBBClubs.length} clubs created`)
     return createCourts(DDBBSports, DDBBClubs)
   })
-  // .then(createdCourts => {
-  //   DDBBCourts = createdCourts
-  //   console.log(`${DDBBCourts.length} courts created`)
-  //   createRequests(DDBBPlayers, DDBBClubs, DDBBCourts)
-  //   DDBBRequests = createdPastRequests
-  //   //console.log(`${DDBBRequests.length} requests created`)
-  // })
+  .then(createdCourts => {
+    DDBBCourts = createdCourts
+    console.log(`${DDBBCourts.length} courts created`)
+    createRequests(DDBBPlayers, DDBBClubs, DDBBCourts)
+    DDBBRequests = createdPastRequests
+    //console.log(`${DDBBRequests.length} requests created`)
+  })
   .catch(error => console.log(error))
 /*    .then(() => {
       createMatches()
