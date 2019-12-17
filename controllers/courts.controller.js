@@ -13,7 +13,7 @@ module.exports.new = (req, res, next) => {
     firstWord: 'Add',
     secondWord: 'Court',
   }
-  if (user.name === name  && user.__type === 'Club') {
+  if (user.name === name) {
     Sport.find({})
       .then(sports => {
         res.render('courts/new', {
@@ -32,7 +32,7 @@ module.exports.new = (req, res, next) => {
 //     secondWord: 'Request',
 //   }
 
-//   if (user.username === username  && user.__type === 'Player') {
+//   if (user.username === username) {
 //     Player.findOne({username: user.username})
 //     .populate('sports')
 //     .populate('club')

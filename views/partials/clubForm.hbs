@@ -2,7 +2,7 @@
   <div class="col-md-12 login-from-row">
     <label>Add a club:</label>
     <select name="club">
-      {{#each club as |club|}}
+      {{#each clubs as |club|}}
         <option value="{{club.id}}" id="{{club.id}}">{{club.name}}</option>
       {{/each}}
     </select>
