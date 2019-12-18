@@ -39,7 +39,7 @@ router.post('/players/:username/sports/new', authMiddleware.isAuthenticated, aut
 
 //request
 router.get('/players/:username/request/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.selectSport)
-router.get('/players/:username/request/new/:sport', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.new)
+router.post('/players/:username/request/new/:sport', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.new)
 
 //clubs
 router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
