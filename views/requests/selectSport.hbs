@@ -2,7 +2,7 @@
   {{>navbar}}
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
-	      <form action="/players/:username/request/new/:sport" method="POST">
+	      <form action="/players/{{user.username}}/request/new/{{sport.name}}" method="POST">
           {{>titleForm}}		
           {{>sportsForm}}  
 		      <div class="row">

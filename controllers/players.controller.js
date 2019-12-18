@@ -146,10 +146,10 @@ module.exports.newSport = (req, res, next) => {
   if (user.username === username) {
 
     Sport.find()
-      .then(sport => {
+      .then(sports => {
         res.render('sports/new', {
           user,
-          sport,
+          sports,
           title
         })
       })
