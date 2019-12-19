@@ -101,21 +101,87 @@ module.exports.addNewRequest = (req, res, next) => {
   const endDateRequest = new Date(dateRequest.setHours(selectedEndTime))
 
   if (user.username === username) {
+    Sport.findOne({name: sportName})
+      .then(sportRequest => {
+        const title = {
+          firstWord: `${sportRequest.name}`,
+          secondWord: 'Request',
+        }
+        Club.findOne({_id: selectedClubId})
+          .then(clubRequest => {
+            if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
+              res.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
+              res.render('requests/new', {
+                title,
+                user,
+                sportName,
+                clubRequest
+              })
+            } else if (selectedStartTime > selectedEndTime) {
+              req.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
+              res.render('requests/new', {
+                title,
+                user,
+                sportName,
+                clubRequest
+              })
+            } else if(startDateRequest < currentDate) {
+              req.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
+              res.render('requests/new', {
+                title,
+                user,
+                sportName,
+                clubRequest
+              })
+            } else {
+            const request = new Request({
+              player: user._id,
+              sport: sportRequest._id,
+              club: clubRequest._id,
+              startDate: startDateRequest,
+              endDate: endDateRequest
+            })
+
+            request.save()
+              .then((request) => {
+                console.log(request)
+                req.session.genericSuccess = "The request has been created"
+                res.redirect(`/players/${user.username}`)
+              })
+            }
+          })
+    })
+  }
+
+  /*if (user.username === username) {
     Club.findOne({_id: selectedClubId})
       .then(club => {
         const clubRequest = club
+        console.log(clubRequest)
         if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
-          req.session.genericError = 
-          `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
-          res.redirect(`/players/${user.username}/request/new`)   //=> It must render request created form !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          res.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
+          res.render('requests/new', {
+            title,
+            user,
+            sportName,
+            clubRequest
+          })
         } else if (selectedStartTime > selectedEndTime) {
-          req.session.genericError = 
-          `Start time can´t be greater than end time. Check your selected start and end times.`
-          res.redirect(`/players/${user.username}/request/new`)   //=> It must render request created form !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          req.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
+          res.render('requests/new', {
+            title,
+            user,
+            sportName,
+            clubRequest
+          })
         } else if(startDateRequest < currentDate) {
-          req.session.genericError = 
-          `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
-          res.redirect(`/players/${user.username}/request/new`)   //=> It must render request created form !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          req.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
+          res.render('requests/new', {
+            title,
+            user,
+            sportName,
+            clubRequest
+          })
         } else {
           Sport.findOne({name: sportName})
           .then(sport => {
@@ -136,7 +202,7 @@ module.exports.addNewRequest = (req, res, next) => {
           })
         }
       })
-  }
+  }*/
 }
 
 
