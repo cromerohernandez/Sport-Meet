@@ -4,11 +4,15 @@
 	   <div class="col-md-12 login-form">
 	      <form action="/clubs/{{user.name}}/courts/add" method="POST">
           {{>titleForm}}
-          {{>nameForm}}
+          <div class="row">
+            <div class="col-md-12 login-from-row">
+              <input name="courtName" type="text" required="true" class="form-control" id="courtName" placeholder="Court name">
+            </div>
+          </div>
           {{>sportsForm}}
-          <select name="sport">
-              <option name="indoorOrOutdoor" value="indoor">indoor</option>
-              <option name="indoorOrOutdoor" value="outdoor">outdoor</option>
+          <select name="indoorOrOutdoor">
+              <option value="indoor">indoor</option>
+              <option value="outdoor">outdoor</option>
           </select>
 		      <div class="row">
 		        <div class="col-md-12 login-from-row">

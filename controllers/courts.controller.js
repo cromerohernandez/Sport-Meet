@@ -3,6 +3,7 @@
     - create
 */
 
+const Court = require('../models/court.model')
 const Club = require('../models/users/club.model')
 const Sport = require('../models/sport.model')
 
@@ -18,38 +19,34 @@ module.exports.new = (req, res, next) => {
       .then(sports => {
         res.render('courts/new', {
           title,
+          user,
           sports
         })
       })
   }
 }
 
-// module.exports.new = (req, res, next) => {
-//   const user = req.session.user
-//   const username = req.params.username
-//   const title = {
-//     firstWord: 'New',
-//     secondWord: 'Request',
-//   }
-
-//   if (user.username === username) {
-//     Player.findOne({username: user.username})
-//     .populate('sports')
-//     .populate('club')
-//     .then(user => {
-//       if (user.sports.length === 0) {
-//         req.session.genericError = "You don't have any favourite sport yet. Add at least one sport"
-//         res.redirect(`/players/${username}/sports/new`)
-//       } else {
-//         const sport = user.sports
-//         const club = user.club
-//         res.render('requests/new', {
-//           title,
-//           user,
-//           sport,
-//           club
-//         })
-//       }
-//     })
-//   }
-// }
+module.exports.add = (req, res, next) => {
+  const user = req.session.user
+  const { courtName, sport, indoorOrOutdoor } = req.body
+  const title = {
+    firstWord: 'Add',
+    secondWord: 'Court',
+  }
+  if(!courtName){
+    res.redirect(`/clubs/${user.name}/courts/new`)
+  } else {
+    const court = new Court({
+      club: user._id,
+      name: courtName,
+      sports: sport,
+      indoorOrOutdoor: indoorOrOutdoor
+    })
+    console.log(court)
+    court.save()
+      .then(court => {
+        req.session.genericSuccess = `${court.name} has been added to your club!`
+        res.redirect(`/clubs/${user.name}/courts/new`)
+      })
+  }
+}

@@ -1,30 +1,43 @@
 <div class="container">
+  {{#if user.isNew}}
+  {{else}}
+    {{>navbar}}
+  {{/if}}
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
-	      <form action="/players" method="POST">
+	      <form {{#if user.isNew}}action="/players"{{else}} action="/players/{{user.username}}/edit"{{/if}} method="POST" enctype="multipart/form-data">
 
+          {{#if user.isNew}}
 	        <div class="row">
 		        <div class="col-md-12 login-form-header">
 		          <p class="login-form-font-header">New<span>Player</span><p>
 		        </div>
 		      </div>
+          {{else}}
+            {{>titleForm}}
+          {{/if}}
 
           {{>nameForm}}
           {{>surnameForm}}
+          {{#if user.isNew}}
           {{>usernameForm}}
           {{>emailForm}}
+          {{/if}}
           {{>passwordForm}}
+          {{>photoForm}}
 
-          <div class="row">
-            <div class="col-md-12 login-from-row">
-              <input type="text" class="form-control" id="photo" name="photo" placeholder="photo">
-            </div>
-          </div>
-
+          
           <div class="col-md-12 login-from-row">
-            <button class="btn btn-info">Sign up</button>
+            <button class="btn btn-info">
+              {{#if user.isNew}}
+              Sign up
+              {{else}}
+              Edit
+              {{/if}}
+            </button>
           </div>
-
+          
+          {{#if user.isNew}}
           <div class="row">
 		        <div class="col-md-12 login-from-row">
               <p>Already have an account?</p>
@@ -33,7 +46,7 @@
               </p>
 		        </div>
 		      </div>
-
+          {{/if}}
 	      </form>
 	    </div>
     </div>

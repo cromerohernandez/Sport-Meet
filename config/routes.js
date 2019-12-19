@@ -1,5 +1,8 @@
 //we need express because of the Router() function
 const express = require('express');
+//to upload files
+const upload = require('./cloudinary.config');
+
 
 // The express.Router class can be used to create modular mountable route handlers. 
 //A Router instance is a complete middleware and routing system; 
@@ -23,6 +26,8 @@ const authMiddleware = require('../middlewares/auth.middleware')
 //playMiddleware
 const playMiddleware = require('../middlewares/play.middleware')
 
+
+
 //base
 router.get('/', authMiddleware.isAuthenticated, baseController.index)
 router.get('/login', authMiddleware.isNotAuthenticated, baseController.login)
@@ -31,9 +36,11 @@ router.post('/logout', authMiddleware.isAuthenticated, baseController.logout)
 
 //players
 router.get('/players/new', authMiddleware.isNotAuthenticated, playersController.new)
-router.post('/players', authMiddleware.isNotAuthenticated, playersController.create)
+router.post('/players', authMiddleware.isNotAuthenticated, upload.single('photo'), playersController.create)
 router.get('/players/:token/validate', playersController.validate)
-router.get(`/players/:username`, authMiddleware.isAuthenticated, playersController.profile)
+router.get('/players/:username', authMiddleware.isAuthenticated, playersController.profile)
+router.get('/players/:username/edit', authMiddleware.isAuthenticated, playersController.edit)
+router.post('/players/:username/edit', authMiddleware.isAuthenticated, upload.single('photo'), playersController.doEdit)
 router.get('/players/:username/sports/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, playersController.newSport)
 router.post('/players/:username/sports/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, playersController.addNewSport)
 
@@ -44,13 +51,13 @@ router.post('/players/:username/request/new/:sport', authMiddleware.isAuthentica
 
 //clubs
 router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
-router.post('/clubs', authMiddleware.isNotAuthenticated, clubsController.create)
+router.post('/clubs', authMiddleware.isNotAuthenticated, upload.single('photo'), clubsController.create)
 router.get('/clubs/:token/validate', clubsController.validate)
 router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profile)
 
 //courts
 router.get('/clubs/:name/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
-// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.add)
+router.post('/clubs/:name/courts/add', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.add)
 
 //GET petition to '/match/:id' => match function
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)

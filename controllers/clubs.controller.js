@@ -13,6 +13,9 @@ module.exports.new = (_, res) => {
 }
 
 module.exports.create = (req, res, next) => {
+  const photo = req.file.url
+  const imgName = req.file.originalname
+
   const user = new Club({
     name: req.body.name,
     address: req.body.address,
@@ -21,7 +24,8 @@ module.exports.create = (req, res, next) => {
     password: req.body.password,
     openingTime: Number((req.body.openingTime).slice(0,2)),
     closingTime: Number((req.body.closingTime).slice(0,2)),
-    photo: req.file ? req.file.url : undefined
+    photo,
+    imgName
   })
 
   user.save()
@@ -63,12 +67,14 @@ module.exports.validate = (req, res, next) => {
 }
 
 module.exports.profile = (req, res, next) => {
-  const user = req.session.user
   const username = req.params.username
-
-  if (user.username === username) {
-    res.render('clubs/index', {user: req.currentUser})
-  } else {
-    res.redirect(`/clubs/${user.username}`)
-  }
+  Club.findById(req.currentUser._id)
+    .then(user => {
+      if (user.username === username) {
+        res.render('clubs/index', {user})
+      } else {
+        res.redirect(`/clubs/${user.username}`)
+      }
+    })
+    .catch(error => next(error))
 }
