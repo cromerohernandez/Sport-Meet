@@ -9,8 +9,7 @@ const courtSchema = new Schema({
   },
   name: {
     type: String,
-    required: [true, 'Name is required'],
-    unique: true
+    required: [true, 'Name is required']
   },
   sports: {
     type: [mongoose.Schema.Types.ObjectId],

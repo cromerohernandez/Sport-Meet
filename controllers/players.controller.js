@@ -31,14 +31,20 @@ module.exports.new = (_, res) => {
 }
 
 module.exports.create = (req, res, next) => {
+  const photo = req.file.url
+  const imgName = req.file.originalname
+
   const user = new Player({
     name: req.body.name,
     surname: req.body.surname,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    photo: req.file ? req.file.url : undefined
+    photo,
+    imgName
   })
+
+  console.log(req.file)
 
   user.save()
     .then(user => {

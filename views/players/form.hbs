@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
-	      <form action="/players" method="POST">
+	      <form action="/players" method="POST" enctype="multipart/form-data">
 
 	        <div class="row">
 		        <div class="col-md-12 login-form-header">
@@ -14,12 +14,7 @@
           {{>usernameForm}}
           {{>emailForm}}
           {{>passwordForm}}
-
-          <div class="row">
-            <div class="col-md-12 login-from-row">
-              <input type="text" class="form-control" id="photo" name="photo" placeholder="photo">
-            </div>
-          </div>
+          {{>photoForm}}
 
           <div class="col-md-12 login-from-row">
             <button class="btn btn-info">Sign up</button>
