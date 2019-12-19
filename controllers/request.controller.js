@@ -56,8 +56,7 @@ module.exports.new = (req, res, next) => {
 
   if (user.username === username) {
     Sport.findOne({_id: selectedSportId})
-      .then(sport => {
-        const sportRequest = sport
+      .then(sportRequest => {
         const title = {
           firstWord: `${sportRequest.name}`,
           secondWord: 'Request',
@@ -110,7 +109,7 @@ module.exports.addNewRequest = (req, res, next) => {
         Club.findOne({_id: selectedClubId})
           .then(clubRequest => {
             if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
-              res.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
+              req.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
               res.render('requests/new', {
                 title,
                 user,
