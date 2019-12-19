@@ -42,6 +42,10 @@ const playerSchema = new Schema({
   }
 })
 
+/*playerSchema.virtual('fairPlay').get(function() {
+  return (this.ok / this.votes) * 100
+})*/
+
 playerSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.'})
 
 //Player schema extended by base schema
