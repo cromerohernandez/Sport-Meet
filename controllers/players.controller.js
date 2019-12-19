@@ -10,7 +10,6 @@
     - new request
 */
 
-const createError = require('http-errors');
 const Player = require('../models/users/player.model')
 const Sport = require('../models/sport.model')
 const mongoose = require('mongoose');
@@ -78,53 +77,6 @@ module.exports.validate = (req, res, next) => {
     .catch(next)
 }
 
-module.exports.login = (_, res) => {
-  res.render('players/login')
-}
-
-module.exports.doLogin = (req, res, next) => {
-  const { email, password } = req.body
-
-  if (!email || !password) {
-    return res.render('players/login', { user: req.body })
-  }
-
-  Player.findOne({ email: email, validated: true })
-
-    .then(user => {
-      if (!user) {
-        res.render('players/login', {
-          user: req.body,
-          error: { password: 'invalid password' }
-        })
-      } else {
-        return user.checkPassword(password)
-          .then(match => {
-            if (!match) {
-              res.render('players/login', {
-                user: req.body,
-                error: { password: 'invalid password' }
-              })
-            } else {
-              req.session.user = user
-              req.session.genericSuccess = 'Welcome!'
-              res.redirect('/')
-            }
-          })
-      }
-    })
-    .catch(error => {
-      if (error instanceof mongoose.Error.ValidationError) {
-        res.render('players/login', {
-          user: req.body,
-          error: error.errors
-        })
-      } else {
-        next(error)
-      }
-    });
-}
-
 module.exports.profile = (req, res, next) => {
   const user = req.session.user
   const username = req.params.username
@@ -143,7 +95,7 @@ module.exports.newSport = (req, res, next) => {
     secondWord: 'Sports'
   }
 
-  if (user.username === username) {
+  if (user.username === username && user.__type === 'Player') {
 
     Sport.find()
       .then(sport => {

@@ -49,7 +49,7 @@ router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profi
 
 //courts
 router.get('/clubs/:name/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
-// router.post('/courts', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.add)
+router.post('/clubs/:name/courts/add', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.add)
 
 //GET petition to '/match/:id' => match function
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)
