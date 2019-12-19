@@ -115,27 +115,30 @@ module.exports.edit = (req, res, next) => {
 module.exports.doEdit = (req, res, next) => {
   const username = req.params.username
 
-  Player.findById(req.currentUser._id)
-    .then()
-
   const { name, surname, password } = req.body
+
+
+  Player.findById(req.currentUser._id)
+    .then(user => {
+      Player.findByIdAndUpdate(
+        user._id,
+        {
+          name: name ? name : user.name,
+          surname: surname ? surname : user.surname,
+          username: user.username,
+          email: user.email,
+          password: password ? password : user.password,
+          photo: req.file ? req.file.url : user.photo,
+          imgName: req.file ? req.file.originalname : user.imgName
+        },
+        {new: true}
+      )
+      .then((user) => {
+        res.render(`players/index`, {user})
+      })
+    })
+
   
-  Player.findByIdAndUpdate(
-    user._id,
-    {
-      name: name ? name : user.name,
-      surname: surname ? surname : user.surname,
-      username: user.username,
-      email: user.email,
-      password: password ? password : user.password,
-      photo: req.file ? req.file.url : user.photo,
-      imgName: req.file ? req.file.originalname : user.imgName
-    },
-    {new: true}
-  )
-  .then((user) => {
-    res.render(`players/index`, {user})
-  })
 }
 
 module.exports.newSport = (req, res, next) => {
