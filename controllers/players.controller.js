@@ -10,7 +10,6 @@
     - new request
 */
 
-const createError = require('http-errors');
 const Player = require('../models/users/player.model')
 const Sport = require('../models/sport.model')
 const mongoose = require('mongoose');
@@ -32,14 +31,18 @@ module.exports.new = (_, res) => {
 }
 
 module.exports.create = (req, res, next) => {
+  
   const user = new Player({
     name: req.body.name,
     surname: req.body.surname,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    photo: req.file ? req.file.url : undefined
+    photo: req.file ? req.file.url : undefined,
+    imgName: req.file ? req.file.originalname : undefined
   })
+
+  console.log(req.file)
 
   user.save()
     .then(user => {
@@ -78,61 +81,64 @@ module.exports.validate = (req, res, next) => {
     .catch(next)
 }
 
-module.exports.login = (_, res) => {
-  res.render('players/login')
+module.exports.profile = (req, res, next) => {
+  const username = req.params.username
+
+  Player.findById(req.currentUser._id)
+   .then(user => {
+     if (user.username === username) {
+       res.render('players/index', {user})
+     } else {
+       res.redirect(`/players/${user.username}`)
+     }
+   })
 }
 
-module.exports.doLogin = (req, res, next) => {
-  const { email, password } = req.body
-
-  if (!email || !password) {
-    return res.render('players/login', { user: req.body })
+module.exports.edit = (req, res, next) => {
+  const title = {
+    firstWord: 'Edit',
+    secondWord: 'Profile'
   }
+  const username = req.params.username
 
-  Player.findOne({ email: email, validated: true })
-
+  Player.findById(req.currentUser._id)
     .then(user => {
-      if (!user) {
-        res.render('players/login', {
-          user: req.body,
-          error: { password: 'invalid password' }
+      if (user.username === username) {
+        res.render('players/form', {
+          user,
+          title
         })
-      } else {
-        return user.checkPassword(password)
-          .then(match => {
-            if (!match) {
-              res.render('players/login', {
-                user: req.body,
-                error: { password: 'invalid password' }
-              })
-            } else {
-              req.session.user = user
-              req.session.genericSuccess = 'Welcome!'
-              res.redirect('/')
-            }
-          })
       }
     })
-    .catch(error => {
-      if (error instanceof mongoose.Error.ValidationError) {
-        res.render('players/login', {
-          user: req.body,
-          error: error.errors
-        })
-      } else {
-        next(error)
-      }
-    });
 }
 
-module.exports.profile = (req, res, next) => {
-  const user = req.session.user
+module.exports.doEdit = (req, res, next) => {
   const username = req.params.username
-  if (user.username === username) {
-    res.render('players/index', {user: req.currentUser})
-  } else {
-    res.redirect(`/players/${user.username}`)
-  }
+
+  const { name, surname, password } = req.body
+
+
+  Player.findById(req.currentUser._id)
+    .then(user => {
+      Player.findByIdAndUpdate(
+        user._id,
+        {
+          name: name ? name : user.name,
+          surname: surname ? surname : user.surname,
+          username: user.username,
+          email: user.email,
+          password: password ? password : user.password,
+          photo: req.file ? req.file.url : user.photo,
+          imgName: req.file ? req.file.originalname : user.imgName
+        },
+        {new: true}
+      )
+      .then((user) => {
+        res.render(`players/index`, {user})
+      })
+    })
+
+  
 }
 
 module.exports.newSport = (req, res, next) => {
@@ -143,7 +149,7 @@ module.exports.newSport = (req, res, next) => {
     secondWord: 'Sports'
   }
 
-  if (user.username === username) {
+  if (user.username === username && user.__type === 'Player') {
 
     Sport.find()
       .then(sports => {
@@ -164,7 +170,6 @@ module.exports.addNewSport = (req, res, next) => {
   Player.findOne({username: user.username})
     .then(user => {
       if (!user.sports.includes(body.sport)){
-        console.log(req.body)
         Player.findByIdAndUpdate(
           user._id,
           {

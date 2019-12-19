@@ -10,6 +10,29 @@ hbs.registerPartials(path.join(__dirname, '../views/partials'));
 //this is an example of an hbs helper that we can add in our "HTML" views as functions
 // I'm not sure that we are going to use that helper, but it's fine to have an example to follow!
 
-hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
-  return (arg1 === arg2) ? options.fn(this) : options.inverse(this)
-})
+hbs.registerHelper({
+  eq: function (v1, v2) {
+      return v1 === v2;
+  },
+  ne: function (v1, v2) {
+      return v1 !== v2;
+  },
+  lt: function (v1, v2) {
+      return v1 < v2;
+  },
+  gt: function (v1, v2) {
+      return v1 > v2;
+  },
+  lte: function (v1, v2) {
+      return v1 <= v2;
+  },
+  gte: function (v1, v2) {
+      return v1 >= v2;
+  },
+  and: function () {
+      return Array.prototype.slice.call(arguments).every(Boolean);
+  },
+  or: function () {
+      return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+  }
+});

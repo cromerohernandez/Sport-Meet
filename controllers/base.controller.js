@@ -1,14 +1,17 @@
-//to handle errors
 const Base = require('../models/users/base.model')
 const mongoose = require('mongoose');
 
 module.exports.index = (req, res, next) => {
-  const user = req.session.user
-  if (user.__type === 'Club'){
-    res.redirect(`/clubs/${user.name}`)
-  } else {
-    res.redirect(`/players/${user.username}`)
-  }
+  Base.findById(req.currentUser._id)
+    .then(user => {
+      if (user.__type === 'Club'){
+        res.redirect(`/clubs/${user.name}`)
+      } else {
+        res.redirect(`/players/${user.username}`)
+      }
+    })
+    .catch(error => next(error))
+
 }
 
 // render the home page

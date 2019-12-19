@@ -91,7 +91,6 @@ module.exports.addNewRequest = (req, res, next) => {
   const selectedStartTime = req.body.openingTime
   const selectedEndTime = req.body.closingTime
   const currentDate = new Date()
-  console.log(currentDate)
   const title = {
     firstWord: `${sportName}`,
     secondWord: 'Request',
@@ -118,7 +117,7 @@ module.exports.addNewRequest = (req, res, next) => {
                 clubRequest
               })
             } else if (selectedStartTime > selectedEndTime) {
-              req.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
+              res.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
               res.render('requests/new', {
                 title,
                 user,
@@ -126,7 +125,7 @@ module.exports.addNewRequest = (req, res, next) => {
                 clubRequest
               })
             } else if(startDateRequest < currentDate) {
-              req.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
+              res.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
               res.render('requests/new', {
                 title,
                 user,
@@ -144,9 +143,39 @@ module.exports.addNewRequest = (req, res, next) => {
 
             request.save()
               .then((request) => {
-                console.log(request)
-                req.session.genericSuccess = "The request has been created"
-                res.redirect(`/players/${user.username}`)
+                //req.session.genericSuccess = "The request has been created"
+                // res.redirect(`/players/${user.username}`)
+                Request.find({
+                  active: true,
+                  sport: sportRequest._id,
+                  club: clubRequest._id,
+                  startDate: startDateRequest,
+                  endDate: endDateRequest
+                  //level
+                }) 
+                .limit(sportRequest.numberOfPlayers)
+                .then(requestToMatch => {
+                  if (requestToMatch.length === sportRequest.numberOfPlayers) {
+                    // console.log(requestToMatch)
+                    requestToMatch.map(request => {
+                      console.log(request)
+                      Request.findByIdAndUpdate(
+                        request._id,
+                        { 
+                          active: false 
+                        },
+                        { new: true }
+                      )
+                      .then((falsedRequests) => {
+                        
+                        console.log(falsedRequests)
+                      })
+                    })
+                  } else {
+                    req.session.genericError = "The request has been created. When we found a match we will send you an email."
+                    res.redirect(`/players/${user.username}`)
+                  }
+                })
               })
             }
           })
@@ -167,7 +196,7 @@ module.exports.addNewRequest = (req, res, next) => {
             clubRequest
           })
         } else if (selectedStartTime > selectedEndTime) {
-          req.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
+          res.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
           res.render('requests/new', {
             title,
             user,

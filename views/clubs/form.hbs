@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
-	      <form action="/clubs" method="POST">
+	      <form action="/clubs" method="POST" enctype="multipart/form-data">
 
 	        <div class="row">
 		        <div class="col-md-12 login-form-header">
@@ -14,11 +14,7 @@
           {{>passwordForm}}
           {{>addressForm}}
           {{>cityForm}}
-          <div class="row">
-            <div class="col-md-12 login-from-row">
-              <input type="text" class="form-control" id="photo" name="photo" placeholder="photo">
-            </div>
-          </div>
+          {{>photoForm}}
           {{>timeForm}}
 
           <div class="col-md-12 login-from-row">

@@ -33,6 +33,9 @@ const baseSchema = new Schema({
     trim: true,
     minlength: [8, 'Password needs at least 8 chars']
   },
+  imgName: {
+    type: String
+  },
   photo: {
     type: String,
     default: '../../images/defaultUser.png'
