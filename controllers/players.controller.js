@@ -31,17 +31,15 @@ module.exports.new = (_, res) => {
 }
 
 module.exports.create = (req, res, next) => {
-  const photo = req.file.url
-  const imgName = req.file.originalname
-
+  
   const user = new Player({
     name: req.body.name,
     surname: req.body.surname,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    photo,
-    imgName
+    photo: req.file ? req.file.url : undefined,
+    imgName: req.file ? req.file.originalname : undefined
   })
 
   console.log(req.file)
@@ -84,13 +82,60 @@ module.exports.validate = (req, res, next) => {
 }
 
 module.exports.profile = (req, res, next) => {
-  const user = req.session.user
   const username = req.params.username
-  if (user.username === username) {
-    res.render('players/index', {user: req.currentUser})
-  } else {
-    res.redirect(`/players/${user.username}`)
+
+  Player.findById(req.currentUser._id)
+   .then(user => {
+     if (user.username === username) {
+       res.render('players/index', {user})
+     } else {
+       res.redirect(`/players/${user.username}`)
+     }
+   })
+}
+
+module.exports.edit = (req, res, next) => {
+  const title = {
+    firstWord: 'Edit',
+    secondWord: 'Profile'
   }
+  const username = req.params.username
+
+  Player.findById(req.currentUser._id)
+    .then(user => {
+      if (user.username === username) {
+        res.render('players/form', {
+          user,
+          title
+        })
+      }
+    })
+}
+
+module.exports.doEdit = (req, res, next) => {
+  const username = req.params.username
+
+  Player.findById(req.currentUser._id)
+    .then()
+
+  const { name, surname, password } = req.body
+  
+  Player.findByIdAndUpdate(
+    user._id,
+    {
+      name: name ? name : user.name,
+      surname: surname ? surname : user.surname,
+      username: user.username,
+      email: user.email,
+      password: password ? password : user.password,
+      photo: req.file ? req.file.url : user.photo,
+      imgName: req.file ? req.file.originalname : user.imgName
+    },
+    {new: true}
+  )
+  .then((user) => {
+    res.render(`players/index`, {user})
+  })
 }
 
 module.exports.newSport = (req, res, next) => {
@@ -122,7 +167,6 @@ module.exports.addNewSport = (req, res, next) => {
   Player.findOne({username: user.username})
     .then(user => {
       if (!user.sports.includes(body.sport)){
-        console.log(req.body)
         Player.findByIdAndUpdate(
           user._id,
           {

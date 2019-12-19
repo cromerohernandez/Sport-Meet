@@ -67,12 +67,14 @@ module.exports.validate = (req, res, next) => {
 }
 
 module.exports.profile = (req, res, next) => {
-  const user = req.session.user
   const username = req.params.username
-
-  if (user.username === username) {
-    res.render('clubs/index', {user: req.currentUser})
-  } else {
-    res.redirect(`/clubs/${user.username}`)
-  }
+  Club.findById(req.currentUser._id)
+    .then(user => {
+      if (user.username === username) {
+        res.render('clubs/index', {user})
+      } else {
+        res.redirect(`/clubs/${user.username}`)
+      }
+    })
+    .catch(error => next(error))
 }
