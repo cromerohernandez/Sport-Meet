@@ -237,7 +237,7 @@ Promise.all([
   .then(createdCourts => {
     DDBBCourts = createdCourts
     console.log(`${DDBBCourts.length} courts created`)
-    createRequests(DDBBPlayers, DDBBClubs, DDBBCourts)
+    //createRequests(DDBBPlayers, DDBBClubs, DDBBCourts)
   })
   .catch(error => console.log(error))
 /*    .then(() => {

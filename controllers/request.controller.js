@@ -3,41 +3,24 @@
     - create
 */
 
-const Request = require('../models/request.model')
+const Sport = require('../models/sport.model')
 const Player = require('../models/users/player.model')
 const Club = require('../models/users/club.model')  
+const Court = require('../models/court.model')  
+const Request = require('../models/request.model')
 
-/*module.exports.new = (req, res, next) => {
-  const user = req.session.user
-  const username = req.params.username
-  const title = {
-    firstWord: 'New',
-    secondWord: 'Request',
+function uniqueClubs(arr, field1) {
+  let unique = arr.map(e => e[field1])
+  for (i = 0; i < unique.length; i++) {
+    for (j = i + 1; j < unique.length; j++) {
+      if (unique[i]["_id"].equals(unique[j]["_id"])) {
+        unique.splice(j, 1)
+        j--
+      } 
+    }
   }
-
-  if (user.username === username) {
-    Player.findOne({username: user.username})
-    .populate('sports')
-    .then(user => {
-      if (user.sports.length === 0) {
-        req.session.genericError = "You don't have any favourite sport yet. Add at least one sport"
-        res.redirect(`/players/${username}/sports/new`)
-      } else {
-        const sport = user.sports
-        Club.find()
-        .then(clubs => {
-          res.render('requests/new', {
-            title,
-            user,
-            sport,
-            clubs
-          })
-        })
-      }
-    })
-  }
-}*/
-
+  return unique
+}
 
 module.exports.selectSport = (req, res, next) => {
   const user = req.session.user
@@ -66,4 +49,95 @@ module.exports.selectSport = (req, res, next) => {
   }
 }
 
-module.exports.new = (req, res, next) => {}
+module.exports.new = (req, res, next) => {
+  const user = req.session.user
+  const username = req.params.username
+  const selectedSportId = req.body.sport
+
+  if (user.username === username) {
+    Sport.findOne({_id: selectedSportId})
+      .then(sport => {
+        const sportRequest = sport
+        const title = {
+          firstWord: `${sportRequest.name}`,
+          secondWord: 'Request',
+        }
+        if (!sportRequest) {
+          req.session.genericError = "You must select a sport before."
+          res.redirect(`/players/${username}/request/new`)
+        } else {
+            Court.find({sports: {$in: sportRequest._id}})
+              .populate('club')
+              .then(courts => {
+                const clubs = uniqueClubs(courts, 'club')
+                res.render('requests/new', {
+                  title,
+                  user,
+                  sportRequest,
+                  clubs
+                })
+              })
+          }
+      })
+  }
+}
+
+module.exports.addNewRequest = (req, res, next) => {
+  const user = req.session.user
+  const username = req.params.username
+  const sportName = req.params.sport
+  const selectedClubId = req.body.club
+  const selectedDate = req.body.date
+  const selectedStartTime = req.body.openingTime
+  const selectedEndTime = req.body.closingTime
+  const currentDate = new Date()
+  console.log(currentDate)
+  const title = {
+    firstWord: `${sportName}`,
+    secondWord: 'Request',
+  }
+  const dateRequest = new Date(`${selectedDate}`)
+  const startDateRequest = new Date(dateRequest.setHours(selectedStartTime))
+  const endDateRequest = new Date(dateRequest.setHours(selectedEndTime))
+
+  if (user.username === username) {
+    Club.findOne({_id: selectedClubId})
+      .then(club => {
+        const clubRequest = club
+        if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
+          req.session.genericError = 
+          `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
+          res.redirect(`/players/${user.username}/request/new`)   //=> It must render request created form !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        } else if (selectedStartTime > selectedEndTime) {
+          req.session.genericError = 
+          `Start time can´t be greater than end time. Check your selected start and end times.`
+          res.redirect(`/players/${user.username}/request/new`)   //=> It must render request created form !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        } else if(startDateRequest < currentDate) {
+          req.session.genericError = 
+          `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
+          res.redirect(`/players/${user.username}/request/new`)   //=> It must render request created form !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        } else {
+          Sport.findOne({name: sportName})
+          .then(sport => {
+            const sportRequest = sport
+            const request = new Request({
+              player: user._id,
+              sport: sportRequest._id,
+              club: selectedClubId,
+              startDate: startDateRequest,
+              endDate: endDateRequest
+            })
+
+            request.save()
+              .then(() => {
+                req.session.genericSuccess = "The request has been created"
+                res.redirect(`/players/${user.username}`)
+              })
+          })
+        }
+      })
+  }
+}
+
+
+//////// revisar hora al crear requests!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1

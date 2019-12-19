@@ -3,7 +3,7 @@
     <label>Add a club:</label>
     <select name="club">
       {{#each clubs as |club|}}
-        <option value="{{club.id}}" id="{{club.id}}">{{club.name}}</option>
+        <option name="{{club.name}}" value="{{club.id}}" id="{{club.id}}">{{club.name}}</option>
       {{/each}}
     </select>
   </div>

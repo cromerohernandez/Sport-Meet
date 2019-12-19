@@ -1,16 +1,18 @@
 <div class="container">
   {{>navbar}}
   <div class="row text-center login-page">
-	   <div class="col-md-12 login-form">
-	      <form action="/players/:username/request/new/:sport" method="POST">
-          {{>titleForm}}		
-          {{>sportsForm}}  
-		      <div class="row">
-		        <div class="col-md-12 login-from-row">
-		          <button class="btn btn-info">Continue</button>
-		        </div>
-		      </div>
-	      </form>
-	    </div>
-    </div>
+		<div class="col-md-12 login-form">
+			<form action="/players/{{user.username}}/request/new/{{sportRequest.name}}" method="POST">
+				{{>titleForm}}
+				{{>clubForm}}
+				{{>dateForm}}
+				{{>timeForm}}
+				<div class="row">
+					<div class="col-md-12 login-from-row">
+						<button class="btn btn-info">Send</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
