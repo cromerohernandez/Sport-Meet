@@ -10,7 +10,9 @@ require('../../config/db.config')
 //discriminatorKey
 const options = {
   discriminatorKey: '__type',
-  collection: 'users'
+  collection: 'users',
+  timestamps: true,
+  toJSON: {virtuals: true}
 }
 
 const baseSchema = new Schema({
