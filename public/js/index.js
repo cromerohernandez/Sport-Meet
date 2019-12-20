@@ -15,7 +15,7 @@ function removeCourt (name, courtId, element) {
     .then(() => {
       element.parentElement.remove()
     })
-    .catch(error => {
+    .catch(err => {
       console.log(err)
     })
 }

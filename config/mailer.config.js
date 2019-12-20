@@ -16,8 +16,8 @@ module.exports.sendValidateEmail = (targetUser) => {
     to: targetUser.email,
     subject: 'Welcome to SportMeet!',
     html: `
-      <h1>Welcome</h1>
-      <a href='${APP_HOST}/players/${targetUser.activationToken}/validate'>Confirm account</a>
+      <h1>Welcome ${targetUser.name}</h1>
+      <p><a href='${APP_HOST}/players/${targetUser.activationToken}/validate'>Confirm</a> your account and start to play!</p>
     `
   })
     .then(info => console.log(info))
@@ -30,8 +30,8 @@ module.exports.sendValidateEmailForClub = (targetUser) => {
     to: targetUser.email,
     subject: 'Welcome to SportMeet!',
     html: `
-      <h1>Welcome</h1>
-      <p>...we are going to check bla bla bla...<p>
+      <h1>Welcome ${targetUser.name}</h1>
+      <p>We are going to check your form data. Shortly you can start adding your courts<p>
       `
   })
     .then(info => console.log(info))
@@ -64,21 +64,25 @@ module.exports.validateClub = (targetUser) => {
     to: targetUser.email,
     subject: 'Your club has been confirmed!',
     html: `
-      <h1>Welcome</h1>
-      <a href='${APP_HOST}/login'>Log in</a>
+      <h1>Welcome ${targetUser.name}</h1> 
+      <p>Your account has been confirmed. You can <a href='${APP_HOST}/login'>log in</a> right now.
     `
   })
     .then(info => console.log(info))
     .catch(error => console.log(error))
 }
 
-module.exports.sendValidateMatchEmail = (targetUser, targetSport) => {
+module.exports.sendValidateMatchEmail = (targetUser, targetSport, targetClub, targetDate, targetStartTime, targetEndTime) => {
   transporter.sendMail({
     from: `"SportMeet" <${user}>`,
     to: targetUser.email,
     subject: `You have a ${targetSport.name} match!`,
     html: `
-      <h1>You have a ${targetSport.name} match!</h1>
+      <h1>Congratulations! You have a ${targetSport.name} match!</h1>
+      <h4>Club: <b>${targetClub}</b></h4>
+      <h4>Date: <b>${targetDate}</b></h4>
+      <h4>Start Time: <b>${targetStartTime}</b></h4>
+      <h4>Start Time: <b>${targetEndTime}</b></h4>
     `
     //<a href='${APP_HOST}/players/${targetUser.activationToken}/validate'>Confirm account</a>
 

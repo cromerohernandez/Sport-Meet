@@ -76,7 +76,7 @@ module.exports.new = (req, res, next) => {
                   title,
                   user,
                   sportRequest,
-                  clubs
+                  clubs,
                 })
               })
           }
@@ -91,7 +91,7 @@ module.exports.addNewRequest = (req, res, next) => {
   const selectedClubId = req.body.club
   const selectedDate = req.body.date
   const selectedStartTime = req.body.openingTime
-  const selectedEndTime = req.body.closingTime
+  const selectedEndTime = Number(selectedStartTime) + 1
   const currentDate = new Date()
   const dateRequest = new Date(`${selectedDate}`)
   const startDateRequest = new Date(dateRequest.setHours(selectedStartTime))
@@ -115,7 +115,6 @@ module.exports.addNewRequest = (req, res, next) => {
             .then(clubRequest => {
               if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
                 res.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime}:00 and closes at ${clubRequest.closingTime}:00. Check your selected start and end times.`
-                console.log(`selectedDate: ${selectedDate}`)
                 res.render('requests/new', {
                   title,
                   user,
@@ -132,7 +131,11 @@ module.exports.addNewRequest = (req, res, next) => {
                   title,
                   user,
                   sportRequest,
-                  clubRequest
+                  clubs,
+                  clubRequest,
+                  selectedDate,
+                  selectedStartTime,
+                  selectedEndTime
                 })
               } else if(startDateRequest < currentDate) {
                 res.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
@@ -140,7 +143,11 @@ module.exports.addNewRequest = (req, res, next) => {
                   title,
                   user,
                   sportRequest,
-                  clubRequest
+                  clubs,
+                  clubRequest,
+                  selectedDate,
+                  selectedStartTime,
+                  selectedEndTime
                 })
               } else {
               const request = new Request({
@@ -190,8 +197,8 @@ module.exports.addNewRequest = (req, res, next) => {
                         )
                           .populate('player')
                           .then((request) => {
-                            match.confirmed.push({user: request.player._id})
-                            mailer.sendValidateMatchEmail(request.player, sportRequest)
+                            match.players.push(request.player._id)
+                            mailer.sendValidateMatchEmail(request.player, sportRequest, clubRequest, selectedDate, selectedStartTime, selectedStartTime)
                           })
                           .catch(error => next(error))
                       })
