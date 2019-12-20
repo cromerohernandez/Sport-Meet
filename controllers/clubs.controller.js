@@ -1,5 +1,6 @@
 const Club = require('../models/users/club.model')
 const Base = require('../models/users/base.model')
+const Court = require('../models/court.model')
 const mongoose = require('mongoose');
 
 const mailer = require('../config/mailer.config');
@@ -67,14 +68,71 @@ module.exports.validate = (req, res, next) => {
 }
 
 module.exports.profile = (req, res, next) => {
-  const username = req.params.username
+  const name = req.params.name
+
   Club.findById(req.currentUser._id)
     .then(user => {
-      if (user.username === username) {
-        res.render('clubs/index', {user})
+      if (user.name === name) {
+        Court.find({club: user._id})
+          .then(courts => {
+            res.render('clubs/index', {
+              user,
+              courts
+            })
+          })
       } else {
-        res.redirect(`/clubs/${user.username}`)
+        res.redirect(`/clubs/${user.name}`)
       }
     })
     .catch(error => next(error))
+}
+
+module.exports.edit = (req, res, next) => {
+  const name = req.params.name
+
+  const title = {
+    firstWord: 'Edit',
+    secondWord: 'Club'
+  }
+  Club.findById(req.currentUser._id)
+    .then(user => {
+      if (user.name === name) {
+        res.render('clubs/form', {
+          user,
+          title
+        })
+      }
+  })
+}
+
+module.exports.doEdit = (req, res, next) => {
+  const { 
+    address, 
+    name, 
+    password, 
+    openingTime, 
+    closingTime, 
+    city } = req.body
+
+  Club.findById(req.currentUser._id)
+    .then(user => {
+      Club.findByIdAndUpdate(
+        user._id,
+        {
+          address: address ? address : user.address,
+          name: name ? name : user.name,
+          password: password ? password : user.password,
+          photo: req.file ? req.file.url : user.photo,
+          city: city ? city : user.city,
+          imgName: req.file ? req.file.originalname : user.imgName,
+          closingTime: closingTime ? closingTime : user.closingTime,
+          openingTime: openingTime ? openingTime : user.openingTime
+        },
+        {new: true}
+      )
+      .then((user) => {
+        console.log(user)
+        res.redirect(`/`)
+      })
+    })
 }

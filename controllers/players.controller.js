@@ -85,8 +85,12 @@ module.exports.profile = (req, res, next) => {
   const username = req.params.username
 
   Player.findById(req.currentUser._id)
+  .populate('sports')
    .then(user => {
      if (user.username === username) {
+       console.log(typeof user._id)
+       user._id = user._id.toString()
+       console.log(user)
        res.render('players/index', {user})
      } else {
        res.redirect(`/players/${user.username}`)
@@ -100,7 +104,6 @@ module.exports.edit = (req, res, next) => {
     secondWord: 'Profile'
   }
   const username = req.params.username
-
   Player.findById(req.currentUser._id)
     .then(user => {
       if (user.username === username) {
@@ -109,14 +112,13 @@ module.exports.edit = (req, res, next) => {
           title
         })
       }
-    })
+  })
 }
 
 module.exports.doEdit = (req, res, next) => {
   const username = req.params.username
 
   const { name, surname, password } = req.body
-
 
   Player.findById(req.currentUser._id)
     .then(user => {
@@ -134,11 +136,9 @@ module.exports.doEdit = (req, res, next) => {
         {new: true}
       )
       .then((user) => {
-        res.render(`players/index`, {user})
+        res.redirect(`/`)
       })
     })
-
-  
 }
 
 module.exports.newSport = (req, res, next) => {
@@ -165,22 +165,21 @@ module.exports.newSport = (req, res, next) => {
 
 module.exports.addNewSport = (req, res, next) => {
   const user = req.session.user
-  const { body } = req
 
-  Player.findOne({username: user.username})
+  Player.findById(req.currentUser._id)
     .then(user => {
-      if (!user.sports.includes(body.sport)){
+      if (!user.sports.includes(req.body.sport)){
         Player.findByIdAndUpdate(
           user._id,
           {
-            $push: { sports: body.sport }
+            $push: { sports: req.body.sport }
           },
           {new: true}
         )
         .populate('sports')
         .then((user) => {
           const addedSport = user.sports.reduce((_, sport) => {
-            if (sport.id === body.sport) {
+            if (sport.id === req.body.sport) {
               return sport.name
             }
           }, '')
@@ -204,3 +203,22 @@ module.exports.addNewSport = (req, res, next) => {
     })
 }
 
+module.exports.delete = (req, res, next) => {
+  const { params } = req
+  const { user } = req.session
+
+  Player.updateOne({
+    _id: user._id
+  }, {
+    $pull: { 'sports' : params.sportId}
+  }
+  )
+  .then(response => {
+    console.log(response)
+    return res.send('ok')
+  })
+  .catch(err => {
+    console.log(err)
+    return res.send('ok')
+  })
+}

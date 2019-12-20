@@ -9,7 +9,7 @@
   {{#if (eq user.__type "Player")}}
     <a href="/players/{{user.username}}/edit">Edit profile</a>
   {{else}}
-    <a href="">Edit profile</a>
+    <a href="/clubs/{{user.name}}/edit">Edit club</a>
   {{/if}}
   </div>
   <div class="p-2 bd-highlight">

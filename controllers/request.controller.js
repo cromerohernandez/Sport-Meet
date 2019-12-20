@@ -172,7 +172,7 @@ module.exports.addNewRequest = (req, res, next) => {
                       })
                     })
                   } else {
-                    req.session.genericError = "The request has been created. When we found a match we will send you an email."
+                    req.session.genericError = "The request has been created. When we find a match we will send you an email."
                     res.redirect(`/players/${user.username}`)
                   }
                 })

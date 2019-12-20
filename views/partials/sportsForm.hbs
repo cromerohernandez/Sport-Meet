@@ -1,6 +1,10 @@
 <div class="row">
   <div class="col-md-12 login-from-row">
+    {{#if (eq court "true")}}
+    <label>delete a court:</label>
+    {{else}}
     <label>choose a sport:</label>
+    {{/if}}
     <select name="sport">
       {{#each sports as |sport|}}
         <option name="{{sport.name}}" value="{{sport.id}}" id="{{sport.id}}">{{sport.name}}</option>

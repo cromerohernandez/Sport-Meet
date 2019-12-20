@@ -12,15 +12,23 @@
             </div>
             <div class="name">
                 <h3 class="user-name">{{user.name}} {{user.surname}} <small>({{user.__type}})</small></h3>
-                <i class="fa  fa-futbol-o"></i></a>
-                <i class="fa  fa-futbol-o"></i></a>
-                <i class="fa  fa-futbol-o"></i></a>
+                <small class="user-name">Opened from: {{user.openingTime}} to: {{user.closingTime}}</small>
             </div> 
           </div>
         </div>
       </div>
       <div class="description text-center">
-        <p>..........user's bio.........</p>
+        <ul class="unstyled">
+          {{#each courts as |court|}}
+            <li>
+              {{court.name}} 
+              <button type="button" class="close" aria-label="Close" 
+                onclick="removeCourt('{{../user.name}}', '{{court._id}}', this)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </li>
+          {{/each}}
+        </ul>
       </div>
       <div class="row">
         <div class="col-md-12 ml-auto mr-auto">
