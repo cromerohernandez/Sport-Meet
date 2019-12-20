@@ -11,11 +11,11 @@ const courtSchema = new Schema({
     type: String,
     required: [true, 'Name is required']
   },
-  sports: {
-    type: [mongoose.Schema.Types.ObjectId],
+  sports: [{
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Sport',
     required: [true, 'Sport is required']    
-  },
+  }],
   indoorOrOutdoor: {
     type: String,
     enum: [

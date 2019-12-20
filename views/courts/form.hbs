@@ -2,21 +2,40 @@
   {{>navbar}}
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
-	      <form action="/clubs/{{user.name}}/courts/add" method="POST">
+
+	      <form 
+        {{#if (eq court "delete")}}
+          action="/clubs/{{user.name}}/courts/delete"
+        {{else}}
+          action="/clubs/{{user.name}}/courts/add" {
+        {{/if}} method="POST">
+
           {{>titleForm}}
+          {{#if (eq court "delete")}}
+          {{else}}
           <div class="row">
             <div class="col-md-12 login-from-row">
               <input name="courtName" type="text" required="true" class="form-control" id="courtName" placeholder="Court name">
             </div>
           </div>
+          {{/if}}
           {{>sportsForm}}
+          {{#if (eq court "delete")}}
+          {{else}}
           <select name="indoorOrOutdoor">
               <option value="indoor">indoor</option>
               <option value="outdoor">outdoor</option>
           </select>
+          {{/if}}
 		      <div class="row">
 		        <div class="col-md-12 login-from-row">
-		          <button class="btn btn-info">Add</button>
+		          <button class="btn btn-info">
+              {{#if (eq court "delete")}}
+                Delete
+              {{else}}
+                Add
+              {{/if}}
+              </button>
 		        </div>
 		      </div>
 	      </form>
