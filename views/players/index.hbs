@@ -20,7 +20,17 @@
         </div>
       </div>
       <div class="description text-center">
-        <p>..........user's bio.........</p>
+        <ul class="unstyled">
+          {{#each user.sports}}
+            <li>
+              {{this.name}} 
+              <button type="button" class="close" aria-label="Close" 
+              onclick="removeSport('{{../user.username}}', '{{this._id}}', this)" >
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </li>
+          {{/each}}
+        </ul>
       </div>
       <div class="row">
         <div class="col-md-12 ml-auto mr-auto">
@@ -32,13 +42,13 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="">
+                  <a class="nav-link" href="/players/{{user.username}}/match">
                     <i class="request-match-btn">Match</i>
                   </a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="/players/{{user.username}}/sports/new">
-                    <i class="request-match-btn">handle sports</i>
+                    <i class="request-match-btn">Add sports</i>
                   </a>
               </li>
             </ul>

@@ -158,6 +158,10 @@ p {
   margin-top: -80px;
 }
 
+.unstyled {
+  list-style-type: none;
+}
+
 img.rounded {
   border-radius: 6px!important;
 }

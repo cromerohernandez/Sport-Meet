@@ -5,7 +5,7 @@
   {{/if}}
   <div class="row text-center login-page">
 	   <div class="col-md-12 login-form">
-	      <form {{#if user.isNew}}action="/players"{{else}} action="/players/{{user.username}}/edit"{{/if}} method="POST" enctype="multipart/form-data">
+	      <form {{#if user.isNew}}action="/players" {{else}} action="/players/{{user.username}}/edit"{{/if}} method="POST" enctype="multipart/form-data">
 
           {{#if user.isNew}}
 	        <div class="row">

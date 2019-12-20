@@ -43,6 +43,8 @@ router.get('/players/:username/edit', authMiddleware.isAuthenticated, playersCon
 router.post('/players/:username/edit', authMiddleware.isAuthenticated, upload.single('photo'), playersController.doEdit)
 router.get('/players/:username/sports/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, playersController.newSport)
 router.post('/players/:username/sports/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, playersController.addNewSport)
+router.post('/players/:username/sports/delete/:sportId', authMiddleware.isAuthenticated, playersController.delete)
+
 
 //request
 router.get('/players/:username/request/new', authMiddleware.isAuthenticated, authMiddleware.isPlayer, requestController.selectSport)
@@ -54,10 +56,16 @@ router.get('/clubs/new', authMiddleware.isNotAuthenticated, clubsController.new)
 router.post('/clubs', authMiddleware.isNotAuthenticated, upload.single('photo'), clubsController.create)
 router.get('/clubs/:token/validate', clubsController.validate)
 router.get(`/clubs/:name`, authMiddleware.isAuthenticated, clubsController.profile)
+router.get('/clubs/:name/edit', authMiddleware.isAuthenticated, clubsController.edit)
+router.post('/clubs/:name/edit', authMiddleware.isAuthenticated, upload.single('photo'), clubsController.doEdit)
+
+
 
 //courts
 router.get('/clubs/:name/courts/new', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.new)
 router.post('/clubs/:name/courts/add', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.add)
+router.get('/clubs/:name/courts/delete', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.chooseCourtTodelete)
+router.post('/clubs/:name/courts/delete/:courtId', authMiddleware.isAuthenticated, authMiddleware.isClub, courtsController.delete)
 
 //GET petition to '/match/:id' => match function
 // router.get('/match/:id', authMiddleware.isAuthenticated, matchController.index)
