@@ -13,8 +13,6 @@ const mongoose = require('mongoose')
 //if "npm run dev", it will create an ID
 let sessionSecret = (!process.env.SECRET_SESSION && process.env.NODE_ENV === 'dev') ?  uuid() : process.env.SECRET_SESSION
 
-console.log(sessionSecret)
-
 if (!sessionSecret) throw new Error('Env var SECRET_SESSION not found or invalid')
 
 module.exports = session({
