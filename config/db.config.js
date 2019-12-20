@@ -4,7 +4,9 @@
 const mongoose = require('mongoose');
 
 //mongoose connection
-mongoose.connect(process.env.MONGODB_URI)
+let mongodbConnection = (process.env.NODE_ENV === 'dev') ? 'mongodb://localhost:27017/SportMeet' : process.env.MONGODB_URI
+
+mongoose.connect(mongodbConnection)
     .then(() => console.info(`Successfully connected to the database ${MONGODB_URI}`))
     .catch(error => console.error(`An error ocurred trying to connect to de database ${MONGODB_URI}`, error))
 
