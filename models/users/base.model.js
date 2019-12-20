@@ -15,7 +15,7 @@ const options = {
   toJSON: {virtuals: true}
 }
 
-const baseSchema = new Schema({
+const clubSchema = {
   name: {
     type: String,
     required: [true, 'Name is required'],
@@ -48,7 +48,9 @@ const baseSchema = new Schema({
     type: Boolean,
     default: false
   },
-}, options)
+}
+
+const baseSchema = new Schema(clubSchema, options)
 
 baseSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' })
 
