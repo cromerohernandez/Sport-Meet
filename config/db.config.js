@@ -1,7 +1,7 @@
 //mongoDB and mongoose connections
 
 //Node.js module. It is a MongoDB object modeling tool designed to work in an asynchronous environment
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 //mongoose connection
 let mongodbConnection = (process.env.NODE_ENV === 'dev') ? 'mongodb://localhost:27017/SportMeet' : process.env.MONGODB_URI
@@ -14,7 +14,7 @@ mongoose.connect(mongodbConnection)
 // close the connection with mongoose (function - second param)
 process.on('SIGINT', function () {
     mongoose.connection.close(function () {
-        console.log('Mongoose disconnected on app termination');
+        console.log('Mongoose disconnected on app termination')
         process.exit(0);
-    });
-});
+    })
+})
