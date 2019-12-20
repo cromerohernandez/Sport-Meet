@@ -17,7 +17,7 @@ const matchSchema = new Schema({
   court: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Court',
-    required: [true, 'Court is required']
+    //required: [true, 'Court is required']
   },
   startDate: {
     type: Date,
@@ -27,7 +27,12 @@ const matchSchema = new Schema({
     type: Date,
     required: [true, 'EndTime is required']
   },
-  confirmed: [
+  players: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Base',
+      required: [true, 'User is required']
+  }],
+  /*confirmed: [
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -39,7 +44,7 @@ const matchSchema = new Schema({
         default: false
       }
     }
-  ],
+  ],*/
   active: {
     type: Boolean,
     default: false

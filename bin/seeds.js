@@ -1,5 +1,5 @@
 //seeds´s const
-const PLAYERS = 2 //=> number of random players to create
+const PLAYERS = 50 //=> number of random players to create
 const PASTREQUESTS = 20 //=> number of random past requests to create
 const ACTIVEREQUESTS = 15 //=> number of random active requests to create
 const PASTMACHES = 30 //=> number of random past matches to create
@@ -168,11 +168,8 @@ function createRequests(playersArr, clubsArr, courtsArr) {
     const randomPlayer = randomItemArray(playersArr)
     const selectedSportId = randomItemArray(randomPlayer.sports)
     const selectedCourt = randomItemForSport(courtsArr, selectedSportId)
-    console.log(selectedCourt) //////////////////////////////////////////////////////////////////////////
     const selectedClub = clubsArr.find(club => club._id === selectedCourt.club)
-    console.log(selectedClub) //////////////////////////////////////////////////////////////////////////
     const randomDuration = Math.floor((Math.random() * MAXDURATIONREQUEST) + 1)
-    console.log(randomDuration) //////////////////////////////////////////////////////////////////////////
     const selectedStartTime = Math.floor((Math.random * ((selectedClub.closingTime - randomDuration) - selectedClub.openingTime)) + selectedClub.openingTime)
     const randomDate = dateController.newPastDate(selectedStartTime, 0)
 
@@ -204,9 +201,9 @@ Promise.all([
   Player.deleteMany(),
   Club.deleteMany(),
   Court.deleteMany(),
-  /*Request.deleteMany(),
+  Request.deleteMany(),
   Match.deleteMany(),
-  Message.deleteMany()*/
+  /*Message.deleteMany()*/
   ])
   .then(() => {
     return Sport.create(sportsData)
@@ -230,8 +227,8 @@ Promise.all([
   .then(createdCourts => {
     DDBBCourts = createdCourts
     console.log(`${DDBBCourts.length} courts created`)
-    // createRequests(DDBBPlayers, DDBBClubs, DDBBCourts)
-    // DDBBRequests = createdPastRequests
+    //createRequests(DDBBPlayers, DDBBClubs, DDBBCourts)
+    //DDBBRequests = createdPastRequests
     //console.log(`${DDBBRequests.length} requests created`)
   })
   .catch(error => console.log(error))

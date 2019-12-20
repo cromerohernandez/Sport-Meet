@@ -88,9 +88,9 @@ module.exports.profile = (req, res, next) => {
   .populate('sports')
    .then(user => {
      if (user.username === username) {
-       console.log(typeof user._id)
+       //console.log(typeof user._id)
        user._id = user._id.toString()
-       console.log(user)
+       //console.log(user)
        res.render('players/index', {user})
      } else {
        res.redirect(`/players/${user.username}`)
