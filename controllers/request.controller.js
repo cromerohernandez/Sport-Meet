@@ -8,6 +8,9 @@ const Player = require('../models/users/player.model')
 const Club = require('../models/users/club.model')  
 const Court = require('../models/court.model')  
 const Request = require('../models/request.model')
+const Match = require('../models/match.model')
+
+const mailer = require('../config/mailer.config');
 
 function uniqueClubs(arr, field1) {
   let unique = arr.map(e => e[field1])
@@ -90,10 +93,6 @@ module.exports.addNewRequest = (req, res, next) => {
   const selectedStartTime = req.body.openingTime
   const selectedEndTime = req.body.closingTime
   const currentDate = new Date()
-  const title = {
-    firstWord: `${sportName}`,
-    secondWord: 'Request',
-  }
   const dateRequest = new Date(`${selectedDate}`)
   const startDateRequest = new Date(dateRequest.setHours(selectedStartTime))
   const endDateRequest = new Date(dateRequest.setHours(selectedEndTime))
@@ -105,132 +104,112 @@ module.exports.addNewRequest = (req, res, next) => {
           firstWord: `${sportRequest.name}`,
           secondWord: 'Request',
         }
-        Club.findOne({_id: selectedClubId})
-          .then(clubRequest => {
-            if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
-              req.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
-              res.render('requests/new', {
-                title,
-                user,
-                sportName,
-                clubRequest
-              })
-            } else if (selectedStartTime > selectedEndTime) {
-              res.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
-              res.render('requests/new', {
-                title,
-                user,
-                sportName,
-                clubRequest
-              })
-            } else if(startDateRequest < currentDate) {
-              res.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
-              res.render('requests/new', {
-                title,
-                user,
-                sportName,
-                clubRequest
-              })
-            } else {
-            const request = new Request({
-              player: user._id,
-              sport: sportRequest._id,
-              club: clubRequest._id,
-              startDate: startDateRequest,
-              endDate: endDateRequest
-            })
 
-            request.save()
-              .then((request) => {
-                //req.session.genericSuccess = "The request has been created"
-                // res.redirect(`/players/${user.username}`)
-                Request.find({
-                  active: true,
-                  sport: sportRequest._id,
-                  club: clubRequest._id,
-                  startDate: startDateRequest,
-                  endDate: endDateRequest
-                  //level
-                }) 
-                .limit(sportRequest.numberOfPlayers)
-                .then(requestToMatch => {
-                  if (requestToMatch.length === sportRequest.numberOfPlayers) {
-                    // console.log(requestToMatch)
-                    requestToMatch.map(request => {
-                      console.log(request)
-                      Request.findByIdAndUpdate(
-                        request._id,
-                        { 
-                          active: false 
-                        },
-                        { new: true }
-                      )
-                      .then((falsedRequests) => {
-                        
-                        console.log(falsedRequests)
-                      })
-                    })
-                  } else {
-                    req.session.genericError = "The request has been created. When we found a match we will send you an email."
-                    res.redirect(`/players/${user.username}`)
-                  }
+        Court.find({sports: {$in: sportRequest._id}})
+        .populate('club')
+        .then(courts => {
+          const clubs = uniqueClubs(courts, 'club')
+        //})
+
+          Club.findOne({_id: selectedClubId})
+            .then(clubRequest => {
+              if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
+                res.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime}:00 and closes at ${clubRequest.closingTime}:00. Check your selected start and end times.`
+                console.log(`selectedDate: ${selectedDate}`)
+                res.render('requests/new', {
+                  title,
+                  user,
+                  sportRequest,
+                  clubs,
+                  clubRequest,
+                  selectedDate,
+                  selectedStartTime,
+                  selectedEndTime
                 })
+              } else if (selectedStartTime > selectedEndTime) {
+                res.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
+                res.render('requests/new', {
+                  title,
+                  user,
+                  sportRequest,
+                  clubRequest
+                })
+              } else if(startDateRequest < currentDate) {
+                res.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
+                res.render('requests/new', {
+                  title,
+                  user,
+                  sportRequest,
+                  clubRequest
+                })
+              } else {
+              const request = new Request({
+                player: user._id,
+                sport: sportRequest._id,
+                club: clubRequest._id,
+                startDate: startDateRequest,
+                endDate: endDateRequest
               })
-            }
-          })
+
+              request.save()
+                .then(() => {
+                  Request.find({
+                    active: true,
+                    sport: sportRequest._id,
+                    club: clubRequest._id,
+                    startDate: startDateRequest,
+                    endDate: endDateRequest
+                    //level: 
+                  }) 
+                  .limit(sportRequest.numberOfPlayers)
+                  .then(requestToMatch => {
+                    if (requestToMatch.length === sportRequest.numberOfPlayers) {
+                      const match = new Match({
+                        sport: sportRequest._id,
+                        club: clubRequest._id,
+                        //court: clubRequest.courts[Math.floor(Math.random() * clubRequest.courts.length)],
+                        startDate: startDateRequest,
+                        endDate: endDateRequest,
+                        confirmed: []
+                      })
+
+                      match.save()
+                        .then(() => {
+                          req.session.genericSuccess = `You have a ${sportRequest.name} match!`
+                          res.redirect(`/players/${user.username}`)
+                        })
+                        .catch(error => next(error))
+
+                      requestToMatch.map(request => {
+                        Request.findByIdAndUpdate(
+                          request._id,
+                          { 
+                            active: false
+                          },
+                          { new: true }
+                        )
+                          .populate('player')
+                          .then((request) => {
+                            match.confirmed.push({user: request.player._id})
+                            mailer.sendValidateMatchEmail(request.player, sportRequest)
+                          })
+                          .catch(error => next(error))
+                      })
+
+                    } else {
+                      req.session.genericError = `The ${sportRequest.name} request has been created. When we found a match we will send you an email.`
+                      res.redirect(`/players/${user.username}`)
+                    }
+                  })
+                })
+              }
+            })
+            .catch(error => next(error))
+
+        })//
+
     })
   }
-
-  /*if (user.username === username) {
-    Club.findOne({_id: selectedClubId})
-      .then(club => {
-        const clubRequest = club
-        console.log(clubRequest)
-        if (clubRequest.openingTime > selectedStartTime || clubRequest.closingTime < selectedEndTime) {
-          res.locals.genericError = `${clubRequest.name} opens at ${clubRequest.openingTime} and closes at ${clubRequest.closingTime}. Check your selected start and end times.`
-          res.render('requests/new', {
-            title,
-            user,
-            sportName,
-            clubRequest
-          })
-        } else if (selectedStartTime > selectedEndTime) {
-          res.locals.genericError = `Start time can´t be greater than end time. Check your selected start and end times.`
-          res.render('requests/new', {
-            title,
-            user,
-            sportName,
-            clubRequest
-          })
-        } else if(startDateRequest < currentDate) {
-          req.locals.genericError = `Sorry, we can´t travel to the past, your request is earlier than the current time. Check your selected start time and date.`
-          res.render('requests/new', {
-            title,
-            user,
-            sportName,
-            clubRequest
-          })
-        } else {
-          Sport.findOne({name: sportName})
-          .then(sport => {
-            const sportRequest = sport
-            const request = new Request({
-              player: user._id,
-              sport: sportRequest._id,
-              club: selectedClubId,
-              startDate: startDateRequest,
-              endDate: endDateRequest
-            })
-
-            request.save()
-              .then(() => {
-                req.session.genericSuccess = "The request has been created"
-                res.redirect(`/players/${user.username}`)
-              })
-          })
-        }
-      })
-  }*/
 }
 
 

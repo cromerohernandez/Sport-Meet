@@ -71,3 +71,18 @@ module.exports.validateClub = (targetUser) => {
     .then(info => console.log(info))
     .catch(error => console.log(error))
 }
+
+module.exports.sendValidateMatchEmail = (targetUser, targetSport) => {
+  transporter.sendMail({
+    from: `"SportMeet" <${user}>`,
+    to: targetUser.email,
+    subject: `You have a ${targetSport.name} match!`,
+    html: `
+      <h1>You have a ${targetSport.name} match!</h1>
+    `
+    //<a href='${APP_HOST}/players/${targetUser.activationToken}/validate'>Confirm account</a>
+
+  })
+    .then(info => console.log(info))
+    .catch(error => console.log(error))
+}

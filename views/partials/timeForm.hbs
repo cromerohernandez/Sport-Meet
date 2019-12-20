@@ -1,7 +1,10 @@
 <div class="row">
   <div class="col-md-12 login-from-row">
     <small>Start</small>
-    <select name="openingTime"> 
+    <select name="openingTime">
+      {{#if selectedStartTime}}  
+        <option selected="true" disabled="disabled" value={{selectedStartTime}}>{{selectedStartTime}}:00</option>
+      {{/if}}  
       <option value=0>00:00</option>
       <option value=1>01:00</option>
       <option value=2>02:00</option>
@@ -29,6 +32,9 @@
     </select>
     <small>End</small>
     <select name="closingTime">
+      {{#if selectedStartTime}}  
+        <option selected="true" disabled="disabled" value="{{selectedEndTime}}">{{selectedEndTime}}:00</option>
+      {{/if}}  
       <option value=0>00:00</option>
       <option value=1>01:00</option>
       <option value=2>02:00</option>

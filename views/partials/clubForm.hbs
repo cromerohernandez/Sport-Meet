@@ -1,7 +1,10 @@
 <div class="row">
   <div class="col-md-12 login-from-row">
     <label>Add a club:</label>
-    <select name="club"> <!--value="{{clubRequest.name}}"-->
+    <select name="club">
+      {{#if clubRequest}}  
+        <option selected="true" disabled="disabled" name="{{clubRequest.name}}" value="{{clubRequest.id}}" id="{{clubRequest.id}}">{{clubRequest.name}}</option>
+      {{/if}}  
       {{#each clubs as |club|}}
         <option name="{{club.name}}" value="{{club.id}}" id="{{club.id}}">{{club.name}}</option>
       {{/each}}
