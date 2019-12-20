@@ -7,8 +7,8 @@ const mongoose = require('mongoose')
 let mongodbConnection = (process.env.NODE_ENV === 'dev') ? 'mongodb://localhost:27017/SportMeet' : process.env.MONGODB_URI
 
 mongoose.connect(mongodbConnection)
-    .then(() => console.info(`Successfully connected to the database ${MONGODB_URI}`))
-    .catch(error => console.error(`An error ocurred trying to connect to de database ${MONGODB_URI}`, error))
+    .then(() => console.info(`Successfully connected to the database ${mongodbConnection}`))
+    .catch(error => console.error(`An error ocurred trying to connect to de database ${mongodbConnection}`, error))
 
 //when you received the event 'SIGINT' (SIGINT = CTRL+C),
 // close the connection with mongoose (function - second param)
