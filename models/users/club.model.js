@@ -27,9 +27,18 @@ const clubSchema = new Schema({
   }
 })
 
+clubSchema.virtual('courts', {
+  ref: 'Court',
+  localField: '_id',
+  foreignField: 'club',
+  justOne: false,
+});
+
 const Club = Base.discriminator(
   'Club', 
   clubSchema
 )
+
+
 
 module.exports = Club

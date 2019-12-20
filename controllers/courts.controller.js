@@ -26,7 +26,7 @@ module.exports.new = (req, res, next) => {
             })
           })
       } else {
-        console.log('hola')
+        //console.log('Club not found')
       }
     })
 }
@@ -47,7 +47,7 @@ module.exports.add = (req, res, next) => {
           sports: sport,
           indoorOrOutdoor: indoorOrOutdoor
         })
-        console.log(court)
+        //console.log(court)
         court.save()
           .then(court => {
             req.session.genericSuccess = `${court.name} has been added to your club!`
@@ -81,8 +81,8 @@ module.exports.delete = (req, res, next) => {
   const { params } = req
   const { user } = req.session
 
-  console.log(params)
-  console.log(user)
+  //console.log(params)
+  //console.log(user)
 
   Court.deleteOne({_id: params.courtId})
     .then(response => {

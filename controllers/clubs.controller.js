@@ -131,7 +131,7 @@ module.exports.doEdit = (req, res, next) => {
         {new: true}
       )
       .then((user) => {
-        console.log(user)
+        //console.log(user)
         res.redirect(`/`)
       })
     })

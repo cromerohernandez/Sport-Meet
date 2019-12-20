@@ -32,7 +32,6 @@ module.exports.isClub = (req, res, next) => {
   if (req.session.user.__type === "Club") {
     next()
   } else {
-    console.log('STOP!!!!!')
     req.session.genericError = 'User is not a club'
     res.redirect('/players/:username')
   }
