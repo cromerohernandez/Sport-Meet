@@ -105,7 +105,6 @@ function createPlayers(sportsIds) {
       password: 'sportmeet',
       photo: faker.image.people(),
       fairPlay: 0,
-      userType: 'Player',
       sports: randomSports(sportsIds),
       validated: true,
       isAdmin: false
