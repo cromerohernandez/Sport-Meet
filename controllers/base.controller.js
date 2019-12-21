@@ -9,9 +9,7 @@ module.exports.index = (req, res, next) => {
 
   Base.findById(req.currentUser._id)
     .then(user => {
-      if (!user) {
-        res.render('login', {title})     
-      } else if (user.__type === 'Club'){
+      if (user.__type === 'Club'){
         res.redirect(`/clubs/${user.name}`)
       } else {
         res.redirect(`/players/${user.username}`)
@@ -20,7 +18,6 @@ module.exports.index = (req, res, next) => {
     .catch(error => next(error))
 
 }
-
 // render the home page
 module.exports.login = (_, res) => {
   const title = {
