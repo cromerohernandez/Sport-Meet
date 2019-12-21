@@ -1,15 +1,17 @@
-<nav class="d-flex bd-highlight mb-3 navbar navbar-light">
+<nav class="d-flex bd-highlight navbar navbar-light p-0">
   <div class="mr-auto p-2 bd-highlight navbar-brand">
-    LOGO SPORTMEET
+    <a href="/"><img class="logo" src="https://res.cloudinary.com/sportmeetcj/image/upload/v1576919700/sportmeetApp/logoSportMeet_xqvrnu.jpg
+" alt="img-logo"></a>
   </div>
   <div class="p-2 bd-highlight">
-    <a href="/">Home</a>
+    <a href="/"><i class="fa fa-home nav-font-color" aria-hidden="true"></i>
+</a>
   </div>
   <div class="p-2 bd-highlight">
   {{#if (eq user.__type "Player")}}
-    <a href="/players/{{user.username}}/edit">Edit profile</a>
+    <a href="/players/{{user.username}}/edit"><i class="fa fa-pencil-square-o nav-font-color" aria-hidden="true"></i></a>
   {{else}}
-    <a href="/clubs/{{user.name}}/edit">Edit club</a>
+    <a href="/clubs/{{user.name}}/edit"><i class="fa fa-pencil-square-o nav-font-color" aria-hidden="true"></i></a>
   {{/if}}
   </div>
   <div class="p-2 bd-highlight">

@@ -12,9 +12,10 @@
             </div>
             <div class="name">
                 <h3 class="user-name">{{user.name}} {{user.surname}} <small>({{user.__type}})</small></h3>
-                <i class="fa fa-twitter"></i></a>
-                <i class="fa fa-twitter"></i></a>
-                <i class="fa fa-twitter"></i></a>
+                <i class="fa fa-futbol"></i>
+                <i class="fa fa-volleyball-ball"></i>
+                <i class="fa fa-basketball-ball"></i>
+            </div> 
             </div> 
           </div>
         </div>
@@ -38,17 +39,17 @@
             <ul class="nav nav-pills nav-pills-icons justify-content-center mb-4">
               <li class="nav-item">
                   <a class="nav-link active" href="/players/{{user.username}}/request/new">
-                    <i class="request-match-btn">New request</i>
+                    <i class="request-match-btn font-button-index">New request</i>
                   </a>
               </li>
-              <li class="nav-item">
+              {{!-- <li class="nav-item">
                   <a class="nav-link" href="/players/{{user.username}}/match">
-                    <i class="request-match-btn">Match</i>
+                    <i class="request-match-btn font-button-index">Match</i>
                   </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                   <a class="nav-link" href="/players/{{user.username}}/sports/new">
-                    <i class="request-match-btn">Add sports</i>
+                    <i class="request-match-btn font-button-index">Add sports</i>
                   </a>
               </li>
             </ul>
