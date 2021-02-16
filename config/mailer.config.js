@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const APP_HOST = process.env.APP_HOST || 'http://localhost:3000'
+const APP_HOST = (process.env.NODE_ENV === 'dev') ? 'http://localhost:3000' : process.env.APP_HOST
 
 const user = process.env.MAIL_USER
 const pass = process.env.MAIL_PASS
@@ -79,10 +79,10 @@ module.exports.sendValidateMatchEmail = (targetUser, targetSport, targetClub, ta
     subject: `You have a ${targetSport.name} match!`,
     html: `
       <h1>Congratulations! You have a ${targetSport.name} match!</h1>
-      <h4>Club: <b>${targetClub}</b></h4>
+      <h4>Club: <b>${targetClub.name}</b></h4>
       <h4>Date: <b>${targetDate}</b></h4>
       <h4>Start Time: <b>${targetStartTime}</b></h4>
-      <h4>Start Time: <b>${targetEndTime}</b></h4>
+      <h4>Duration: 1 hour</h4>
     `
     //<a href='${APP_HOST}/players/${targetUser.activationToken}/validate'>Confirm account</a>
 

@@ -1,6 +1,7 @@
 //check if current user is authenticated (session exists)
 module.exports.isAuthenticated = (req, res, next) => {
   if (req.session.user) {
+    console.log('hola')
     next()
   } else {
     req.session.genericError = 'User is not authenticated!'

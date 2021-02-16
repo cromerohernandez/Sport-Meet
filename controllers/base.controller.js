@@ -2,6 +2,11 @@ const Base = require('../models/users/base.model')
 const mongoose = require('mongoose');
 
 module.exports.index = (req, res, next) => {
+  const title = {
+    firstWord: 'Sport',
+    secondWord: 'Meet'
+  }
+
   Base.findById(req.currentUser._id)
     .then(user => {
       if (user.__type === 'Club'){
@@ -19,7 +24,6 @@ module.exports.index = (req, res, next) => {
     .catch(error => next(error))
 
 }
-
 // render the home page
 module.exports.login = (_, res) => {
   const title = {

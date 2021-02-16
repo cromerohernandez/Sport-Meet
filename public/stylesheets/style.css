@@ -3,6 +3,10 @@
   padding-top: 15px;
 }
 
+.title-font {
+  font-size: x-large;
+}
+
 .login-page {
  padding: 18% 0 0;
  margin: 0 auto 100px;
@@ -14,6 +18,10 @@
   box-shadow: 0 0 27px 0 rgba(84, 84, 84, 0.62);
 }
 
+.logo {
+  height: 75px;
+}
+
 .login-form-header {
   padding-top: 16px;
 }
@@ -23,9 +31,13 @@
   padding-bottom: 16px;
 }
 
-.login-form-font-header {
-  font-size:30px; 
+.login-form-font-header { 
   font-weight: bold;
+}
+
+.nav-font-color {
+  font-size: x-large;
+  color: #007c9b;
 }
 
 .login-form-font-header span {
@@ -150,8 +162,8 @@ p {
 
 .nav-pills .nav-item i {
   display: block;
-  font-size: 30px;
-  padding: 15px 0;
+  font-size: 21px;
+  padding: 2px 0;
 }
 
 .profile-page .profile .name{
@@ -192,6 +204,8 @@ img.rounded {
   background-color: transparent;
   color: #999;
 }
+
+
 
 /* footer */
 
