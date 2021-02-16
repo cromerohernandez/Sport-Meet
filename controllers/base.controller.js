@@ -6,8 +6,14 @@ module.exports.index = (req, res, next) => {
     .then(user => {
       if (user.__type === 'Club'){
         res.redirect(`/clubs/${user.name}`)
-      } else {
+      } else if (user.__type === 'Player') {
         res.redirect(`/players/${user.username}`)
+      } else if (!user) {
+        const title = {
+          firstWord: 'Sport',
+          secondWord: 'Meet'
+        }
+        res.render('login', {title})
       }
     })
     .catch(error => next(error))
